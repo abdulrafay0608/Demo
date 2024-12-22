@@ -12,38 +12,8 @@ import {
   MdOutlineSearch,
 } from "react-icons/md";
 import moment from "moment";
-const generateRandomTicket = (id) => {
-  const issueTypes = ["Technical", "Billing", "General Inquiry", "Support"];
-  const statuses = ["Open", "In Progress", "Answered", "On Hold", "Closed"];
-  const priorities = ["Low", "Medium", "High"];
-  const agents = ["Agent A", "Agent B", "Agent C", "Agent D"];
 
-  return {
-    ticketId: id,
-    customerName: `Customer ${id}`,
-    issueType: issueTypes[Math.floor(Math.random() * issueTypes.length)],
-    subject: `Issue ${id} Subject`,
-    description: `Description for issue ${id}.`,
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    priority: priorities[Math.floor(Math.random() * priorities.length)],
-    createdDate: new Date(
-      2024,
-      Math.floor(Math.random() * 12),
-      Math.floor(Math.random() * 28) + 1,
-      Math.floor(Math.random() * 24),
-      Math.floor(Math.random() * 60)
-    ).toISOString(),
-    dueDate: new Date(
-      2024,
-      Math.floor(Math.random() * 12),
-      Math.floor(Math.random() * 28) + 1,
-      Math.floor(Math.random() * 24),
-      Math.floor(Math.random() * 60)
-    ).toISOString(),
-    assignedAgent: agents[Math.floor(Math.random() * agents.length)],
-  };
-};
-const TicketTable = ({ statusFilter }) => {
+const TicketTable = ({ statusFilter, setStatusFilter, data }) => {
   const columns = useMemo(
     () => [
       { Header: "Ticket ID", accessor: "ticketId" },
@@ -79,14 +49,6 @@ const TicketTable = ({ statusFilter }) => {
     ],
     []
   );
-  // Generate Random Data (20 Tickets)
-  const data = useMemo(() => {
-    const tickets = [];
-    for (let i = 1; i <= 50; i++) {
-      tickets.push(generateRandomTicket(i));
-    }
-    return tickets;
-  }, []);
 
   // React Table Hooks
   const {
@@ -101,12 +63,8 @@ const TicketTable = ({ statusFilter }) => {
     previousPage,
     pageCount,
     setPageSize,
-    // setGlobalFilter,
-    state: {
-      pageIndex,
-      pageSize,
-      // globalFilter
-    },
+    setGlobalFilter,
+    state: { pageIndex, pageSize, globalFilter },
     canPreviousPage,
     canNextPage,
     // pageOptions,
@@ -133,6 +91,7 @@ const TicketTable = ({ statusFilter }) => {
             onChange={(e) => {
               const value = e.target.value;
               setPageSize(value === "All" ? rows.length : Number(value));
+              // setStatusFilter("");
             }}
           >
             {[10, 25, 50, 100, "All"].map((pageSizeOption) => (
@@ -152,6 +111,8 @@ const TicketTable = ({ statusFilter }) => {
               className="p-2 border-l-2 border-gray-300 outline-gray-500 w-full"
               type="text"
               placeholder="Search..."
+              value={globalFilter || ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
             />
           </div>
         </div>
@@ -163,7 +124,6 @@ const TicketTable = ({ statusFilter }) => {
       >
         <thead className="bg-gray-100 overflow-x-auto">
           {headerGroups.map((headerGroup) => {
-            // Destructure key from header group props
             const { key: headerGroupKey, ...headerGroupProps } =
               headerGroup.getHeaderGroupProps();
             return (

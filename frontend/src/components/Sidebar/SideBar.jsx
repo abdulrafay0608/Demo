@@ -12,7 +12,7 @@ import Navbar from "../Navbar/Navbar";
 
 const routes = [
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
     icon: <FaHome />,
   },
