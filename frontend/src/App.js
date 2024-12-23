@@ -3,8 +3,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Ticket from "./pages/Ticket";
 import LoginPage from "./pages/LoginPage";
-import { Dashboard } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadAction } from "./actions/authActions";
+import store from "./app/Store";
+import Dashboard from "./pages/Dashboard";
+import TicketAdd from "./components/Form/TicketAdd";
 
 // export const appRoutes = [
 //   { path: "/ticket", element: <Ticket /> },
@@ -21,32 +26,49 @@ import { useState } from "react";
 //   <Route key={route.path} path={route.path} element={route.element} />
 // ))}
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Mock login handler
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    navigate("/dashboard");
-  };
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+    console.log("isAuthenticated", isAuthenticated);
+    store.dispatch(LoadAction());
+  }, [dispatch]);
+
   return (
     <>
-      <>
-        {!isAuthenticated ? (
-          <Routes>
-            <Route path="/" element={<LoginPage onLogin={handleLogin} />} />
-            <Route path="*" element={<div>Not Found</div>} />
-          </Routes>
-        ) : (
-          <SideBar>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {!loading && (
+        <>
+          {!isAuthenticated ? (
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/ticket" element={<Ticket />} />
-              <Route path="*" element={<div>Not Found</div>} />
+              <Route path="/" element={<LoginPage />} />
             </Routes>
-          </SideBar>
-        )}
-      </>
+          ) : (
+            <SideBar>
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/ticket" element={<Ticket />} />
+                <Route path="/ticket/add" element={<TicketAdd />} />
+                <Route path="*" element={<div>Not Found</div>} />
+              </Routes>
+            </SideBar>
+          )}
+        </>
+      )}
     </>
   );
 }

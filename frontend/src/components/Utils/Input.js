@@ -9,6 +9,7 @@ const Input = forwardRef(
       type = "text",
       name,
       error,
+      isRequired =false,
       className = "",
       placeholder = "",
       ...props
@@ -20,7 +21,7 @@ const Input = forwardRef(
         {label && (
           <label
             htmlFor={name}
-            className="block text-gray-700 font-medium mb-1"
+            className="text-sm block text-gray-600 font-medium m-0.5"
           >
             {label}
           </label>
@@ -30,10 +31,11 @@ const Input = forwardRef(
           id={name}
           name={name}
           ref={ref}
+          isRequired
           placeholder={placeholder}
           className={`${
             error ? "border-2 border-red-500" : "border-gray-300"
-          } w-full border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${className}`}
+          } w-full placeholder:text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${className}`}
           {...props}
         />
         {error && <p className="ml-1 errorMsg text-red-500 text-sm">{error}</p>}

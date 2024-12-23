@@ -3,23 +3,32 @@ import AuthModel from "../models/authModel.js";
 
 const isAuthenticated = async (req, res, next) => {
   const token = req.cookies?.token;
-
+  console.log("token", token);
   if (!token) {
-    return res.status(401).json({ message: "No token, authorization denied" });
+    return res.status(401).json({
+      success: false,
+      message: "Please log in to continue",
+    });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await AuthModel.findOne({ username: decoded.username });
+    const user = await AuthModel.findOne({ email: decoded.email });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Session expired. Please log in again",
+      });
     }
 
     req.user = user;
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid or expired token" });
+    return res.status(403).json({
+      success: false,
+      message: "Your session has expired. Please log in again",
+    });
   }
 };
 

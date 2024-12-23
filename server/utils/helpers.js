@@ -16,10 +16,9 @@ export const comparePassword = async (password, hashPass) => {
 };
 
 export const generateToken = (user, statusCode, message, res) => {
-  const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
-    // expiresIn: "30m",
+  const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
   });
-
   res
     .status(statusCode)
     .cookie("token", token, {

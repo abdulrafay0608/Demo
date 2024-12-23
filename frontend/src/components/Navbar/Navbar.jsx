@@ -26,6 +26,11 @@ import {
   Settings,
   Logout,
 } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutAction } from "../../actions/authActions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -82,7 +87,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Navbar = ({ toggle }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const { user, error, isAuthenticated } = useSelector((state) => state.user);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const LogoutFunc = () => {
+    dispatch(logoutAction())
+      .unwrap()
+      .then(() => {
+        toast.success("Logout successful!");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err || "Logout failed. Please try again.");
+      });
+  };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -155,7 +174,7 @@ const Navbar = ({ toggle }) => {
         </ListItemIcon>
         Settings
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={LogoutFunc}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -328,7 +347,7 @@ const Navbar = ({ toggle }) => {
                     },
                   }}
                 >
-                  A
+                  {user.username.substring(0, 1)}
                 </Avatar>
               </IconButton>
             </Tooltip>

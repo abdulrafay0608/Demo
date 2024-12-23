@@ -9,9 +9,9 @@ import isAuthenticated from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.post("/sign_up", SignUpController);
+router.post("/sign-up", SignUpController);
+router.post("/login", SigInController);
 router.get("/me", isAuthenticated, LoginCheckController);
-router.post("/sign_in", SigInController);
 router.get("/logout", LogOutController);
 
 export default router;
