@@ -13,7 +13,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://abdulrafaytect.vercel.app/"],
     credentials: true, // Enable cookies
   })
 );
@@ -27,7 +27,7 @@ app.use("/api/auth", authRoutes);
 
 // Root Route
 app.get("/", (req, res) => {
-  res.send("Welcome to CRM Application!");
+  res.send("Welcome to the CRM Application Backend!");
 });
 
 // Start Server
