@@ -11,24 +11,13 @@ DBConnect();
 
 const app = express();
 // Middlewares
-const allowedOrigins = [
-  "http://localhost:3000", // For local development
-  "https://abdulrafaytech.vercel.app", // Your deployed frontend
-];
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the request from the allowed origins
-      } else {
-        callback(new Error("Not allowed by CORS")); // Reject requests from non-allowed origins
-      }
-    },
-    credentials: true, // Allow cookies and other credentials to be included in the request
-  })
-);
-
+const corsOptions = {
+  origin: ["https://abdulrafaytech.vercel.app", "http://localhost:3000"],
+  credentials: true, // This is important for cookies
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
