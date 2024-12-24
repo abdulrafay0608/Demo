@@ -97,7 +97,7 @@ export const LogOutController = async (req, res) => {
     console.log("first");
     res.cookie("token", null, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       expires: new Date(0),
       maxAge: 0,

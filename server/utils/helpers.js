@@ -23,7 +23,7 @@ export const generateToken = (user, statusCode, message, res) => {
     .status(statusCode)
     .cookie("token", token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
     })
     .json({ success: true, message, user, token });
