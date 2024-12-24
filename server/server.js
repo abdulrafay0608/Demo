@@ -12,16 +12,23 @@ DBConnect();
 const app = express();
 // Middlewares
 const allowedOrigins = [
-  "http://localhost:3000", // Local frontend
-  "https://abdulrafaytect.vercel.app", // Deployed frontend
+  "http://localhost:3000", // For local development
+  "https://abdulrafaytect.vercel.app", // Your deployed frontend
 ];
 
 app.use(
   cors({
-    origin: "*", // Allow all origins (for testing purposes only)
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow the request from the allowed origins
+      } else {
+        callback(new Error("Not allowed by CORS")); // Reject requests from non-allowed origins
+      }
+    },
+    credentials: true, // Allow cookies and other credentials to be included in the request
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
