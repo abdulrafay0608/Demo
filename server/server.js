@@ -15,6 +15,7 @@ const allowedOrigins = [
   "http://localhost:3000", // Local frontend
   "https://abdulrafaytect.vercel.app", // Deployed frontend
 ];
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -24,7 +25,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Enable cookies and authentication headers
+    credentials: true, // Allow cookies and credentials
   })
 );
 app.use(express.json());
