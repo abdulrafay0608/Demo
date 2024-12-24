@@ -17,13 +17,13 @@ export const comparePassword = async (password, hashPass) => {
 
 export const generateToken = (user, statusCode, message, res) => {
   const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "1h",
   });
   res
     .status(statusCode)
     .cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production", // Only true in production
       sameSite: "Strict",
     })
     .json({ success: true, message, user, token });
