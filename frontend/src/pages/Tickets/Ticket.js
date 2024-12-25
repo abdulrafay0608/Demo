@@ -80,7 +80,7 @@ const Ticket = () => {
           </button>
 
           <button
-            className="text-sm bg-transparent py-1.5 px-3 rounded-md border border-gray-500 font-inherit text-red-500 hover:bg-red-50"
+            className="text-sm bg-transparent py-1 px-3 rounded-md border border-gray-500 font-inherit text-red-500 hover:bg-red-50"
             onClick={() => setGlobalFilter("open")}
           >
             {data.filter((e) => e.status === "Open").length} Open
