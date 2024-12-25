@@ -6,7 +6,15 @@ import Button from "../../components/Utils/Button";
 import JoditEditor from "jodit-react";
 import ReusableSelect from "../../components/Utils/ReusableSelect";
 import MultiSelect from "../../components/Utils/MultiSelect";
-import { contacts, departments, priorities, services } from "../../components/Utils/constant";
+import {
+  assignTickets,
+  contacts,
+  departments,
+  knowledgeBaseLinks,
+  priorities,
+  services,
+  ticketBodies,
+} from "../../components/Utils/constant";
 import { FaBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,8 +104,8 @@ const TicketAdd = () => {
                     value={field.value}
                     onChange={field.onChange}
                     options={contacts.map((contact) => ({
-                      value: contact?.name,
-                      label: contact?.name,
+                      value: contact?.contact,
+                      label: contact?.contact,
                     }))}
                     error={errors.contact?.message}
                     placeholder="Select your contact"
@@ -207,9 +215,9 @@ const TicketAdd = () => {
                     name={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    options={contacts.map((contact) => ({
-                      value: contact?.name,
-                      label: contact?.name,
+                    options={assignTickets.map((at) => ({
+                      value: at?.assign_ticket,
+                      label: at?.assign_ticket,
                     }))}
                     error={errors.assign_ticket?.message}
                     placeholder="Select your assign ticket"
@@ -296,9 +304,9 @@ const TicketAdd = () => {
                     name={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    options={contacts.map((contact) => ({
-                      value: contact?._id,
-                      label: contact?.name,
+                    options={ticketBodies.map((body) => ({
+                      value: body?.body,
+                      label: body?.body,
                     }))}
                     error={errors.ticket_body?.message}
                     placeholder="Insert predefined reply"
@@ -341,9 +349,9 @@ const TicketAdd = () => {
                     name={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    options={departments.map((depart) => ({
-                      value: depart?.department,
-                      label: depart?.department,
+                    options={knowledgeBaseLinks.map((knowledge) => ({
+                      value: knowledge.link,
+                      label: knowledge.department,
                     }))}
                     error={errors.knowledge?.message}
                     placeholder="Insert knowledge base link"
@@ -367,6 +375,7 @@ const TicketAdd = () => {
                     height: 250,
                     width: "100%",
                   }}
+                  placeholder="Content"
                 />
               )}
             />
