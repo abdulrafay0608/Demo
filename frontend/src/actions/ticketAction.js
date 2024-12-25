@@ -24,15 +24,30 @@ export const GetTicketAction = createAsyncThunk(
   "tickets/get",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${API_BASE_URL}/tickets/get`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`${API_BASE_URL}/tickets/get`);
       return data;
     } catch (error) {
       const message =
         error.response && error.response.data && error.response.data.message
           ? error.response.data.message
           : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);
+export const DeleteTicketAction = createAsyncThunk(
+  "tickets/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(
+        `${API_BASE_URL}/tickets/delete/${id}`
+      );
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "Failed to delete the ticket. Please try again.";
       return rejectWithValue(message);
     }
   }

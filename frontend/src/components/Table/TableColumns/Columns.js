@@ -1,33 +1,58 @@
 import { Link } from "react-router-dom";
 import moment from "moment";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  DeleteTicketAction,
+  GetTicketAction,
+} from "../../../actions/ticketAction";
+import { useDispatch } from "react-redux";
 export const COL_TICKETS = [
   { Header: "# ID", accessor: "_id" },
   {
     Header: "Subject",
     accessor: "subject",
     Cell: ({ value, row }) => {
+      const dispatch = useDispatch();
+
+      const handleDelete = async (id) => {
+        const confirmed = window.confirm(
+          "Are you sure you want to delete this ticket?"
+        );
+        if (confirmed) {
+          try {
+            await dispatch(DeleteTicketAction(id)).unwrap();
+            toast.success("Ticket deleted successfully!");
+            await dispatch(GetTicketAction()); // Reload the tickets
+          } catch (error) {
+            toast.error(error || "Delete failed. Please try again.");
+          }
+        } else {
+          toast.info("Action canceled.");
+        }
+      };
+
       return (
         <div className="main">
           <span>{value}</span>
           <div className="invisible hover:visible subject-buttons">
             <Link
-              to={`/tickets/view/${row.original._id}`}
+              to={row.original._id ? `/tickets/view/${row.original._id}` : "#"}
               className="text-[12px] px-1"
             >
               View
             </Link>
             |
             <Link
-              to={`/tickets/edit/${row.original._id}`}
+              to={row.original._id ? `/tickets/edit/${row.original._id}` : "#"}
               className="text-[12px] px-1"
             >
               Edit
             </Link>
             |
             <button
-              // onClick={() => navigate(`/tickets/delete/${row.original._id}`)} // Delete route
               className="text-[12px] px-1"
+              onClick={() => handleDelete(row.original._id)}
             >
               Delete
             </button>

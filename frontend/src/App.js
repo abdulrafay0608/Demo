@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Ticket from "./pages/Tickets/Ticket";
 import { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadAction } from "./actions/authActions";
 import store from "./app/Store";
@@ -38,13 +38,15 @@ function App() {
       <ToastContainer
         position="top-right"
         autoClose={3000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        theme="light"
+        transition={Bounce}
       />
       {isAuthenticated ? (
         <SideBar>
@@ -53,8 +55,8 @@ function App() {
             <Route path="/tickets" element={<Ticket />} />
             <Route path="/registeration" element={<RegisterPage />} />
             <Route path="/tickets/add" element={<TicketAdd />} />
-            <Route path="/tickets/edit/*" element={<TicketEdit />} />
-            <Route path="/tickets/view/*" element={<TicketView />} />
+            <Route path="/tickets/edit/:id" element={<TicketEdit />} />
+            <Route path="/tickets/view/:id" element={<TicketView />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
         </SideBar>

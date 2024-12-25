@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AddTicketAction, GetTicketAction } from "../../actions/ticketAction";
+import { AddTicketAction, DeleteTicketAction, GetTicketAction } from "../../actions/ticketAction";
 
 const initialState = {
   ticket: [],
@@ -29,7 +29,6 @@ const ticketSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // oad
       .addCase(GetTicketAction.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -39,6 +38,18 @@ const ticketSlice = createSlice({
         state.ticket = action.payload.ticket;
       })
       .addCase(GetTicketAction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(DeleteTicketAction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(DeleteTicketAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.ticket = action.payload.ticket;
+      })
+      .addCase(DeleteTicketAction.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -34,3 +34,20 @@ export const getAllTicketController = async (req, res) => {
     });
   }
 };
+
+export const deleteTicketController = async (req, res) => {
+  try {
+    await TicketModel.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Delete successfully",
+    });
+  } catch (error) {
+    console.error(`Delete Ticket Error: ${error}`);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again",
+    });
+  }
+};
