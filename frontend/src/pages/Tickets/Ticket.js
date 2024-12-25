@@ -203,7 +203,7 @@ const Ticket = () => {
                       return (
                         <td
                           key={cell.row.id + cell.column.id}
-                          className="px-2 py-2 text-[13px] text-gray-700"
+                          className="px-2 py-3 text-[13px] text-gray-700"
                           {...cellProps}
                         >
                           {cell.column.id === "status" ? (

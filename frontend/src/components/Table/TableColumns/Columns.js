@@ -1,6 +1,5 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 
 export const COL_TICKETS = [
   { Header: "# ID", accessor: "_id" },
@@ -8,30 +7,27 @@ export const COL_TICKETS = [
     Header: "Subject",
     accessor: "subject",
     Cell: ({ value, row }) => {
-      // Call useNavigate inside a functional component
-      const navigate = useNavigate(); // Hook should be called inside a component
-
       return (
-        <div>
+        <div className="main">
           <span>{value}</span>
-          <div className="flex gap-x-1">
-            <button
-              onClick={() => navigate(`/tickets/view/${row.original._id}`)} // View route
-              className="text-[12px]"
+          <div className="invisible hover:visible subject-buttons">
+            <Link
+              to={`/tickets/view/${row.original._id}`}
+              className="text-[12px] px-1"
             >
               View
-            </button>
+            </Link>
             |
-            <button
-              onClick={() => navigate(`/tickets/edit/${row.original._id}`)} // Edit route
-              className="text-[12px]"
+            <Link
+              to={`/tickets/edit/${row.original._id}`}
+              className="text-[12px] px-1"
             >
               Edit
-            </button>
+            </Link>
             |
             <button
-              onClick={() => navigate(`/tickets/delete/${row.original._id}`)} // Delete route
-              className="text-[12px]"
+              // onClick={() => navigate(`/tickets/delete/${row.original._id}`)} // Delete route
+              className="text-[12px] px-1"
             >
               Delete
             </button>

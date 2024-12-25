@@ -15,6 +15,7 @@ body {
   background-color: #f4f4f5;
 }
 
+/* sidebar css start */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -31,3 +32,11 @@ li {
 a {
   text-decoration: none;
 }
+/* sidebar css end */
+
+/* table action button css start */
+
+.main:hover .subject-buttons {
+  visibility: visible;
+}
+/* table action button css end */

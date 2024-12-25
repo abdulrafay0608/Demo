@@ -12,6 +12,8 @@ import TicketAdd from "./pages/Tickets/TicketAdd";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import Loader from "./components/loader/Loader";
+import TicketEdit from "./pages/Tickets/TicketEdit";
+import TicketView from "./pages/Tickets/TicketView";
 
 function App() {
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);
@@ -51,6 +53,8 @@ function App() {
             <Route path="/tickets" element={<Ticket />} />
             <Route path="/registeration" element={<RegisterPage />} />
             <Route path="/tickets/add" element={<TicketAdd />} />
+            <Route path="/tickets/edit/*" element={<TicketEdit />} />
+            <Route path="/tickets/view/*" element={<TicketView />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
         </SideBar>
