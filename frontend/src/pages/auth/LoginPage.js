@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Input from "../components/Utils/Input";
-import Button from "../components/Utils/Button";
+import Input from "../../components/Utils/Input";
+import Button from "../../components/Utils/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginAction } from "../actions/authActions";
+import { LoginAction } from "../../actions/authActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../components/loader/Loader";
 
 const LoginPage = () => {
   const {
@@ -41,12 +42,15 @@ const LoginPage = () => {
       });
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div
       className="h-screen w-full bg-cover bg-center relative"
       style={{
-        backgroundImage:
-          'url("/asset/loginbanner.webp")',
+        backgroundImage: 'url("/asset/loginbanner.webp")',
       }}
     >
       <div className="absolute h-screen w-full bg-gradient-to-l from-transparent to-black/80"></div>

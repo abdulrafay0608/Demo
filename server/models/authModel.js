@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// import bcrypt from "bcryptjs";
 
 const AuthSchema = new mongoose.Schema(
   {
@@ -17,8 +16,8 @@ const AuthSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
     role: {
-      type: String,
-      default: "user",
+      type: Number,
+      default: 1,
     },
   },
   {

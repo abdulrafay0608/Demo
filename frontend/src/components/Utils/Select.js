@@ -27,8 +27,8 @@ const Select = forwardRef(
     // Filter options based on search query
     const filteredOptions = options.filter(
       (option) =>
-        option.value &&
-        option.value.toLowerCase().includes(searchQuery.toLowerCase())
+        option.label &&
+        option.label.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleSelect = (selectedValue) => {
@@ -131,7 +131,7 @@ const Select = forwardRef(
               />
 
               {/* Filtered Options */}
-              <ul className="max-h-60 overflow-y-auto scrollbar-none">
+              <ul className="max-h-48 overflow-y-auto scrollbar-none">
                 {filteredOptions.length > 0 ? (
                   filteredOptions.map((option, index) => (
                     <li

@@ -9,7 +9,6 @@ const Input = forwardRef(
       type = "text",
       name,
       error,
-      isRequired =false,
       className = "",
       placeholder = "",
       ...props
@@ -31,7 +30,6 @@ const Input = forwardRef(
           id={name}
           name={name}
           ref={ref}
-          isRequired
           placeholder={placeholder}
           className={`${
             error ? "border-2 border-red-500" : "border-gray-300"

@@ -9,6 +9,7 @@ import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import Navbar from "../Navbar/Navbar";
+import { useSelector } from "react-redux";
 
 const routes = [
   {
@@ -17,9 +18,14 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "/ticket",
+    path: "/tickets",
     name: "Ticket",
     icon: <FaUser />,
+  },
+  {
+    path: "/registeration",
+    name: "Register",
+    icon: <AiFillHeart />,
   },
   {
     path: "/sales",
@@ -67,7 +73,6 @@ const routes = [
     name: "Contracts",
     icon: <AiTwotoneFileExclamation />,
   },
-
   {
     path: "/projects",
     name: "Projects",
@@ -91,6 +96,7 @@ const routes = [
 ];
 
 const SideBar = ({ children }) => {
+  const { user, error, isAuthenticated } = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -141,7 +147,18 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar flex-shrink-0`}
         >
-          <div className="top_section"></div>
+          <div className="flex top_section ">
+            {/* <img
+            border-1 border-gray-700 rounded-lg
+              src="https://perfexcrm.com/demo/uploads/staff_profile_images/1/small_1.png"
+              alt=""
+              className="size-10 rounded-full"
+            />
+            <div className="text-center m-0 p-0">
+              <p className="m-0 p-0">{user?.username}</p>
+              <p className="text-[12px] m-0 p-0">{user?.email}</p>
+            </div> */}
+          </div>
           <section className="routes">
             {routes.map((route) => {
               if (route.subRoutes) {

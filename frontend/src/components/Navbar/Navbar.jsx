@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutAction } from "../../actions/authActions";
+import Loader from "../loader/Loader";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -87,7 +88,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Navbar = ({ toggle }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const { user, error, isAuthenticated } = useSelector((state) => state.user);
+  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -223,6 +224,10 @@ const Navbar = ({ toggle }) => {
       </MenuItem>
     </Menu>
   );
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>

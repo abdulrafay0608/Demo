@@ -1,42 +1,35 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
-import Ticket from "./pages/Ticket";
-import LoginPage from "./pages/LoginPage";
-import { useEffect } from "react";
+import Ticket from "./pages/Tickets/Ticket";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadAction } from "./actions/authActions";
 import store from "./app/Store";
 import Dashboard from "./pages/Dashboard";
-import TicketAdd from "./components/Form/TicketAdd";
+import TicketAdd from "./pages/Tickets/TicketAdd";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import Loader from "./components/loader/Loader";
 
-// export const appRoutes = [
-//   { path: "/ticket", element: <Ticket /> },
-//   { path: "/", element: <Dashboard /> },
-//   { path: "/messages", element: <Messages /> },
-//   { path: "/analytics", element: <Analytics /> },
-//   { path: "/file-manager", element: <FileManager /> },
-//   { path: "/order", element: <Order /> },
-//   { path: "/saved", element: <Saved /> },
-//   { path: "/settings", element: <Setting /> },
-//   { path: "*", element: <>Not Found</> },
-// ];
-// {appRoutes.map((route) => (
-//   <Route key={route.path} path={route.path} element={route.element} />
-// ))}
 function App() {
-  const { loading, isAuthenticated } = useSelector((state) => state.user);
+  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+  const [authChecked, setAuthChecked] = useState(false); // Ensure auth is checked before actions
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-    console.log("isAuthenticated", isAuthenticated);
-    store.dispatch(LoadAction());
+    const loadAuth = async () => {
+      await store.dispatch(LoadAction());
+      setAuthChecked(true);
+    };
+
+    loadAuth();
   }, [dispatch]);
+
+  if (!authChecked) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -51,35 +44,23 @@ function App() {
         draggable
         pauseOnHover
       />
-      {!loading && (
-        <>
-          {!isAuthenticated ? (
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-            </Routes>
-          ) : (
-            <SideBar>
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/ticket" element={<Ticket />} />
-                <Route path="/ticket/add" element={<TicketAdd />} />
-                <Route path="*" element={<div>Not Found</div>} />
-              </Routes>
-            </SideBar>
-          )}
-        </>
+      {isAuthenticated ? (
+        <SideBar>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tickets" element={<Ticket />} />
+            <Route path="/registeration" element={<RegisterPage />} />
+            <Route path="/tickets/add" element={<TicketAdd />} />
+            <Route path="*" element={<div>Not Found</div>} />
+          </Routes>
+        </SideBar>
+      ) : (
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+        </Routes>
       )}
     </>
   );
-}
-{
-  /* 
-<Route path="/messages" element={<Messages />} />
-<Route path="/analytics" element={<Analytics />} />
-<Route path="/file-manager" element={<FileManager />} />
-<Route path="/order" element={<Order />} />
-<Route path="/saved" element={<Saved />} />
-<Route path="/settings" element={<Setting />} />*/
 }
 
 export default App;
