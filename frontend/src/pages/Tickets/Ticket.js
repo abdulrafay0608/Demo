@@ -208,7 +208,7 @@ const Ticket = () => {
                         >
                           {cell.column.id === "status" ? (
                             <span
-                              className={`px-1.5 py-0.5 rounded-lg ${
+                              className={`px-1.5 py-0.5 text-nowrap rounded-lg ${
                                 row.original.status.toLowerCase() === "open"
                                   ? "text-red-500 border"
                                   : row.original.status.toLowerCase() ===
