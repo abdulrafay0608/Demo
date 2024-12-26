@@ -8,7 +8,7 @@ import { checkRole, isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 // checkRole("admin", "user")
-router.get("/get", isAuthenticated, getAllTicketController);
+router.get("/get", getAllTicketController);
 router.post(
   "/add",
   isAuthenticated,
