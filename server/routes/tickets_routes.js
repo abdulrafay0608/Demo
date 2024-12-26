@@ -4,11 +4,22 @@ import {
   deleteTicketController,
   getAllTicketController,
 } from "../controllers/tickets_controllers.js";
+import { checkRole, isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
-
-router.get("/get", getAllTicketController);
-router.post("/add", addTicketController);
-router.delete("/delete/:id", deleteTicketController);
+// checkRole("admin", "user")
+router.get("/get", isAuthenticated, getAllTicketController);
+router.post(
+  "/add",
+  isAuthenticated,
+  checkRole("admin", "user"),
+  addTicketController
+);
+router.delete(
+  "/delete/:id",
+  isAuthenticated,
+  checkRole("admin"),
+  deleteTicketController
+);
 
 export default router;

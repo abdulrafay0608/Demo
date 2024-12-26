@@ -16,8 +16,8 @@ const AuthSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
     role: {
-      type: Number,
-      default: 1,
+      type: String,
+      default: "user",
     },
   },
   {

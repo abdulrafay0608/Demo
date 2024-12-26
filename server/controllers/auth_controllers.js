@@ -7,7 +7,7 @@ import {
 
 export const SignUpController = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     const isExist = await AuthModel.findOne({ email });
 
@@ -24,6 +24,7 @@ export const SignUpController = async (req, res) => {
       username,
       email,
       password: hashpass,
+      role,
     });
 
     generateToken(user, 200, "Sign-in Successful", res);
@@ -71,7 +72,6 @@ export const SigInController = async (req, res) => {
 export const LoginCheckController = async (req, res) => {
   try {
     const user = await AuthModel.findById(req?.user.id).select("-password");
-    console.log("user", user);
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -94,13 +94,11 @@ export const LoginCheckController = async (req, res) => {
 
 export const LogOutController = async (req, res) => {
   try {
-    console.log("first");
     res.cookie("token", null, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       expires: new Date(0),
-      maxAge: 0,
     });
 
     res.status(200).json({

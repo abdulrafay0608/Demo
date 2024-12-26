@@ -7,11 +7,11 @@ import { SignUpAction } from "../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../components/loader/Loader";
+import Loader from "../../components/Loader/Loader";
 
 const roles = [
-  { _id: 1, role: "Admin" },
-  { _id: 2, role: "User" },
+  { role: "admin", label: "Admin" },
+  { role: "user", label: "User" },
 ];
 
 const RegisterPage = () => {
@@ -96,8 +96,8 @@ const RegisterPage = () => {
                     value={field.value}
                     onChange={field.onChange}
                     options={roles.map((role) => ({
-                      value: role?._id,
-                      label: role?.role,
+                      value: role?.role,
+                      label: role?.label,
                     }))}
                     error={errors.role?.message}
                     placeholder="Select your role"

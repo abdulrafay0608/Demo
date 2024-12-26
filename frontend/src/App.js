@@ -11,7 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import TicketAdd from "./pages/Tickets/TicketAdd";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import Loader from "./components/loader/Loader";
+import Loader from "./components/Loader/Loader";
 import TicketEdit from "./pages/Tickets/TicketEdit";
 import TicketView from "./pages/Tickets/TicketView";
 

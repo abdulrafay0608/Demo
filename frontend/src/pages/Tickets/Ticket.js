@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/loader/Loader";
+import Loader from "../../components/Loader/Loader";
 import {
   useTable,
   usePagination,
@@ -203,7 +203,7 @@ const Ticket = () => {
                       return (
                         <td
                           key={cell.row.id + cell.column.id}
-                          className="px-2 py-3 text-[13px] text-gray-700"
+                          className="px-2 py-3 text-sm text-gray-700"
                           {...cellProps}
                         >
                           {cell.column.id === "status" ? (

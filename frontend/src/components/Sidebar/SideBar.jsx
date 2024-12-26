@@ -1,102 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { FaHome, FaUser } from "react-icons/fa";
-import { MdMessage } from "react-icons/md";
-import { BiAnalyse } from "react-icons/bi";
-import { BiCog } from "react-icons/bi";
-import { AiFillHeart, AiTwotoneFileExclamation } from "react-icons/ai";
-import { BsCartCheck } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import Navbar from "../Navbar/Navbar";
 import { useSelector } from "react-redux";
-
-const routes = [
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: <FaHome />,
-  },
-  {
-    path: "/tickets",
-    name: "Ticket",
-    icon: <FaUser />,
-  },
-  {
-    path: "/registeration",
-    name: "Register",
-    icon: <AiFillHeart />,
-  },
-  {
-    path: "/sales",
-    name: "Sales",
-    icon: <MdMessage />,
-    subRoutes: [
-      {
-        path: "/sales/proposals",
-        name: "Proposals ",
-      },
-      {
-        path: "/sales/invoices",
-        name: "Invoices",
-      },
-      {
-        path: "/sales/estimates",
-        name: "Estimates",
-      },
-      {
-        path: "/sales/payments",
-        name: "Payments",
-      },
-      {
-        path: "/sales/credit-notes",
-        name: "Credit Notes",
-      },
-      {
-        path: "/sales/items",
-        name: "Items",
-      },
-    ],
-  },
-  {
-    path: "/subscriptions",
-    name: "Subscriptions",
-    icon: <BiAnalyse />,
-  },
-  {
-    path: "/expenses",
-    name: "Expenses",
-    icon: <BsCartCheck />,
-  },
-  {
-    path: "/contracts",
-    name: "Contracts",
-    icon: <AiTwotoneFileExclamation />,
-  },
-  {
-    path: "/projects",
-    name: "Projects",
-    icon: <BiCog />,
-  },
-  {
-    path: "/tasks",
-    name: "Tasks",
-    icon: <AiFillHeart />,
-  },
-  {
-    path: "/support",
-    name: "Support",
-    icon: <AiFillHeart />,
-  },
-  {
-    path: "/reports",
-    name: "Reports",
-    icon: <AiFillHeart />,
-  },
-];
+import { routes } from "../Routes/SideBarRoutes";
 
 const SideBar = ({ children }) => {
-  const { user, error, isAuthenticated } = useSelector((state) => state.user);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const accessibleRoutes = routes.filter((route) => {
+    if (isAuthenticated && route.roles.includes(user?.role)) {
+      return true;
+    }
+    return false;
+  });
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -160,7 +77,7 @@ const SideBar = ({ children }) => {
             </div> */}
           </div>
           <section className="routes">
-            {routes.map((route) => {
+            {accessibleRoutes.map((route) => {
               if (route.subRoutes) {
                 return (
                   <SidebarMenu

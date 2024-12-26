@@ -16,15 +16,21 @@ export const comparePassword = async (password, hashPass) => {
 };
 
 export const generateToken = (user, statusCode, message, res) => {
-  const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+  const token = jwt.sign(
+    { email: user.email, id: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+  );
+  const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000,
+  };
+  res.status(statusCode).cookie("token", token, cookieOptions).json({
+    success: true,
+    message,
+    user,
+    token,
   });
-  res
-    .status(statusCode)
-    .cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-    })
-    .json({ success: true, message, user, token });
 };

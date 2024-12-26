@@ -6,7 +6,7 @@ import {
   DeleteTicketAction,
   GetTicketAction,
 } from "../../../actions/ticketAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 export const COL_TICKETS = [
   { Header: "# ID", accessor: "_id" },
   {
@@ -14,7 +14,7 @@ export const COL_TICKETS = [
     accessor: "subject",
     Cell: ({ value, row }) => {
       const dispatch = useDispatch();
-
+      const { user } = useSelector((state) => state.user);
       const handleDelete = async (id) => {
         const confirmed = window.confirm(
           "Are you sure you want to delete this ticket?"
@@ -42,20 +42,26 @@ export const COL_TICKETS = [
             >
               View
             </Link>
-            |
-            <Link
-              to={row.original._id ? `/tickets/edit/${row.original._id}` : "#"}
-              className="text-[12px] px-1"
-            >
-              Edit
-            </Link>
-            |
-            <button
-              className="text-[12px] px-1"
-              onClick={() => handleDelete(row.original._id)}
-            >
-              Delete
-            </button>
+            {user.role === "admin" && (
+              <>
+                |
+                <Link
+                  to={
+                    row.original._id ? `/tickets/edit/${row.original._id}` : "#"
+                  }
+                  className="text-[12px] px-1"
+                >
+                  Edit
+                </Link>
+                |
+                <button
+                  className="text-[12px] px-1"
+                  onClick={() => handleDelete(row.original._id)}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </div>
         </div>
       );

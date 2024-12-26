@@ -5,7 +5,7 @@ import {
   SigInController,
   SignUpController,
 } from "../controllers/auth_controllers.js";
-import isAuthenticated from "../middlewares/auth.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
