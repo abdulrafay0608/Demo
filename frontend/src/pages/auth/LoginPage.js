@@ -43,7 +43,7 @@ const LoginPage = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <Loader/>;
   }
 
   return (

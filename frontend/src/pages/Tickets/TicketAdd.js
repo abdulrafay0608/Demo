@@ -18,10 +18,10 @@ import {
 import { FaBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/Loader/Loader";
 import { AddTicketAction } from "../../actions/ticketAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../components/Loader/Loader";
 
 const TicketAdd = () => {
   const dispatch = useDispatch();

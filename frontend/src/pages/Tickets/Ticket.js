@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/Loader/Loader";
 import {
   useTable,
   usePagination,
@@ -17,6 +16,7 @@ import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { COL_TICKETS } from "../../components/Table/TableColumns/Columns";
 import { GetTicketAction } from "../../actions/ticketAction";
+import Loader from "../../components/Loader/Loader";
 
 const Ticket = () => {
   const { isAuthenticated } = useSelector((state) => state.user);

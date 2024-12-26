@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Ticket from "./pages/Tickets/Ticket";
 import { useEffect, useState } from "react";
@@ -11,9 +11,9 @@ import Dashboard from "./pages/Dashboard";
 import TicketAdd from "./pages/Tickets/TicketAdd";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import Loader from "./components/Loader/Loader";
 import TicketEdit from "./pages/Tickets/TicketEdit";
 import TicketView from "./pages/Tickets/TicketView";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);
