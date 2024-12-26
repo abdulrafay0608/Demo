@@ -66,11 +66,11 @@ const Ticket = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="w-full">
+    <div className="w-full p-3">
       <div>
         <div className="flex m-3 text-sm space-x-2">
           <button
-            className="text-sm bg-black text-white py-1 px-3 rounded-md font-inherit hover:bg-opacity-90"
+            className="text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
             onClick={() => navigate("/tickets/add")}
           >
             <span className="flex items-center gap-1.5">

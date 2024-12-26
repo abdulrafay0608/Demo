@@ -3,6 +3,7 @@ import {
   addTicketController,
   deleteTicketController,
   getAllTicketController,
+  EditTicketController,
 } from "../controllers/tickets_controllers.js";
 import { checkRole, isAuthenticated } from "../middlewares/auth.js";
 
@@ -14,6 +15,12 @@ router.post(
   isAuthenticated,
   checkRole("admin", "user"),
   addTicketController
+);
+router.put(
+  "/edit/:id",
+  isAuthenticated,
+  checkRole("admin", "user"),
+  EditTicketController
 );
 router.delete(
   "/delete/:id",

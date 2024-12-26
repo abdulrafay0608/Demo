@@ -3,7 +3,7 @@ import {
   AiFillFileText,
   AiOutlineUsergroupAdd,
 } from "react-icons/ai";
-import { MdMessage, MdAttachMoney } from "react-icons/md";
+import { MdMessage } from "react-icons/md";
 import { BiCog, BiAnalyse, BiCartAlt } from "react-icons/bi";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { FaHome, FaTicketAlt } from "react-icons/fa";

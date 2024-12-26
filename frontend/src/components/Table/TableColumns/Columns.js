@@ -31,7 +31,6 @@ export const COL_TICKETS = [
           toast.info("Action canceled.");
         }
       };
-
       return (
         <div className="main">
           <span>{value}</span>

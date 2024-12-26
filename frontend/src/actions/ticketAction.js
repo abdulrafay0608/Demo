@@ -35,6 +35,21 @@ export const GetTicketAction = createAsyncThunk(
     }
   }
 );
+export const EditTicketAction = createAsyncThunk(
+  "tickets/edit",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(`${API_BASE_URL}/tickets/edit/${id}`);
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);
 export const DeleteTicketAction = createAsyncThunk(
   "tickets/delete",
   async (id, { rejectWithValue }) => {
