@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoginAction } from "../../actions/authActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../components/loader/Loader";
 
 const LoginPage = () => {
   const {

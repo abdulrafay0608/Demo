@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddTicketAction } from "../../actions/ticketAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../components/loader/Loader";
 
 const TicketAdd = () => {
   const dispatch = useDispatch();

@@ -31,7 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutAction } from "../../actions/authActions";
-import Loader from "../Loader/Loader";
+import Loader from "../loader/Loader";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

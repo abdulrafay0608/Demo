@@ -13,7 +13,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import TicketEdit from "./pages/Tickets/TicketEdit";
 import TicketView from "./pages/Tickets/TicketView";
-import Loader from "./components/Loader/Loader";
+import Loader from "./components/loader/Loader";
 
 function App() {
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);

@@ -16,7 +16,7 @@ import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { COL_TICKETS } from "../../components/Table/TableColumns/Columns";
 import { GetTicketAction } from "../../actions/ticketAction";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../components/loader/Loader";
 
 const Ticket = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
