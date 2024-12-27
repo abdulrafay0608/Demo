@@ -384,7 +384,7 @@ const TicketAdd = () => {
             <Button
               type="submit"
               label="Open Ticket"
-              className="text-nowrap px-3 max-w-min mt-6"
+              className="text-nowrap px-3 py-2 max-w-min mt-6"
               // loading={loading}
             />
           </div>

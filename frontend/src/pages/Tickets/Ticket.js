@@ -20,8 +20,11 @@ import Loader from "../../components/loader/Loader";
 
 const Ticket = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
-  const { ticket, loading } = useSelector((state) => state.ticket);
-  const data = useMemo(() => (Array.isArray(ticket) ? ticket : []), [ticket]);
+  const { allTickets, loading } = useSelector((state) => state.ticket);
+  const data = useMemo(
+    () => (Array.isArray(allTickets) ? allTickets : []),
+    [allTickets]
+  );
   const navigate = useNavigate();
   const columns = useMemo(() => COL_TICKETS, [COL_TICKETS]);
   const dispatch = useDispatch();

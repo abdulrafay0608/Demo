@@ -9,12 +9,10 @@ export const AddTicketAction = createAsyncThunk(
   async (myForm, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${API_BASE_URL}/tickets/add`, myForm);
-      return data;
+      return { ticket: data.ticket }; // Ensure consistent payload structure
     } catch (error) {
       const message =
-        error.response && error.response.data && error.response.data.message
-          ? error.response.data.message
-          : error.message || "An error occurred";
+        error.response?.data?.message || error.message || "An error occurred";
       return rejectWithValue(message);
     }
   }
@@ -35,11 +33,11 @@ export const GetTicketAction = createAsyncThunk(
     }
   }
 );
-export const EditTicketAction = createAsyncThunk(
-  "tickets/edit",
+export const GetSingleTicketAction = createAsyncThunk(
+  "tickets/get/id",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`${API_BASE_URL}/tickets/edit/${id}`);
+      const { data } = await axios.get(`${API_BASE_URL}/tickets/get/${id}`);
       return data;
     } catch (error) {
       const message =
@@ -50,6 +48,44 @@ export const EditTicketAction = createAsyncThunk(
     }
   }
 );
+
+export const EditTicketAction = createAsyncThunk(
+  "tickets/edit",
+  async ({ id, updatedData }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${API_BASE_URL}/tickets/edit/${id}`,
+        updatedData
+      );
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);
+export const UpdateStatusAction = createAsyncThunk(
+  "tickets/update-status",
+  async ({ id, selectedStatus }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${API_BASE_URL}/tickets/update-status/${id}`,
+        { selectedStatus }
+      );
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);
+
 export const DeleteTicketAction = createAsyncThunk(
   "tickets/delete",
   async (id, { rejectWithValue }) => {

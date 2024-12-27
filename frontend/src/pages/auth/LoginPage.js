@@ -107,7 +107,7 @@ const LoginPage = () => {
               <Button
                 type="submit"
                 label="Login"
-                className="mt-6"
+                className="mt-8 py-2"
                 loading={loading}
               />
             </form>

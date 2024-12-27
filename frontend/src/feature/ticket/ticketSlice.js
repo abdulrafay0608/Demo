@@ -3,11 +3,14 @@ import {
   AddTicketAction,
   DeleteTicketAction,
   EditTicketAction,
+  GetSingleTicketAction,
   GetTicketAction,
+  UpdateStatusAction,
 } from "../../actions/ticketAction";
 
 const initialState = {
-  ticket: [],
+  allTickets: [],
+  singleTicket: null,
   loading: false,
   error: null,
 };
@@ -21,55 +24,71 @@ const ticketSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    const handleError = (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    };
+
     builder
       .addCase(AddTicketAction.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(AddTicketAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.ticket = action.payload.ticket;
+        state.allTickets = [...state.allTickets, action.payload.ticket];
       })
-      .addCase(AddTicketAction.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+      .addCase(AddTicketAction.rejected, handleError)
+      
       .addCase(GetTicketAction.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(GetTicketAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.ticket = action.payload.ticket;
+        state.allTickets = action.payload.tickets;
       })
-      .addCase(GetTicketAction.rejected, (state, action) => {
+      .addCase(GetTicketAction.rejected, handleError)
+
+      .addCase(GetSingleTicketAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(GetSingleTicketAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.singleTicket = action.payload.ticket;
       })
+      .addCase(GetSingleTicketAction.rejected, handleError)
+
+      .addCase(UpdateStatusAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(UpdateStatusAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleTicket = action.payload.ticket;
+      })
+      .addCase(UpdateStatusAction.rejected, handleError)
+
       .addCase(EditTicketAction.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(EditTicketAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.ticket = action.payload.ticket;
+        state.allTickets = state.allTickets.map((ticket) =>
+          ticket._id === action.payload.ticket._id
+            ? action.payload.ticket
+            : ticket
+        );
       })
-      .addCase(EditTicketAction.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+      .addCase(EditTicketAction.rejected, handleError)
+
       .addCase(DeleteTicketAction.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(DeleteTicketAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.ticket = action.payload.ticket;
+        state.allTickets = state.allTickets.filter(
+          (ticket) => ticket._id !== action.payload.ticket._id
+        );
       })
-      .addCase(DeleteTicketAction.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+      .addCase(DeleteTicketAction.rejected, handleError);
   },
 });
 

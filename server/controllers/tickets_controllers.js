@@ -19,15 +19,33 @@ export const addTicketController = async (req, res) => {
 };
 export const getAllTicketController = async (req, res) => {
   try {
-    const ticket = await TicketModel.find();
+    const tickets = await TicketModel.find();
 
     res.status(200).json({
       success: true,
       message: "Get successfully",
-      ticket,
+      tickets,
     });
   } catch (error) {
     console.error(`Get Ticket Error: ${error}`);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again",
+    });
+  }
+};
+
+export const getSingleTicketController = async (req, res) => {
+  try {
+    const ticket = await TicketModel.findById(req.params.id);
+console.log('ticket', ticket)
+    res.status(200).json({
+      success: true,
+      message: "Get Single successfully",
+      ticket,
+    });
+  } catch (error) {
+    console.error(`Get Single Ticket Error: ${error}`);
     res.status(500).json({
       success: false,
       message: "Something went wrong. Please try again",
@@ -40,6 +58,28 @@ export const EditTicketController = async (req, res) => {
     const ticket = await TicketModel.findByIdAndUpdate(
       req.params.id,
       req.body,
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Update successfully",
+      ticket,
+    });
+  } catch (error) {
+    console.error(`Update Ticket Error: ${error}`);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again",
+    });
+  }
+};
+
+export const UpdateStatusController = async (req, res) => {
+  try {
+    const ticket = await TicketModel.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.selectedStatus },
       { new: true }
     );
 

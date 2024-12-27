@@ -4,7 +4,7 @@ const Button = ({ type, label, className, loading }) => {
   return (
     <button
       type={type}
-      className={`${className} w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center`}
+      className={`${className} w-full bg-black hover:bg-gray-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center`}
       disabled={loading} // Disable button while loading
     >
       {loading ? (
