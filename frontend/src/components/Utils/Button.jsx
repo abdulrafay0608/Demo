@@ -1,10 +1,10 @@
 import React from "react";
 
-const Button = ({ type, label, className, loading }) => {
+const Button = ({ type, label, className, icon, loading }) => {
   return (
     <button
       type={type}
-      className={`${className} w-full bg-black hover:bg-gray-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center`}
+      className={`${className} w-full bg-black border border-black hover:bg-gray-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center`}
       disabled={loading} // Disable button while loading
     >
       {loading ? (
@@ -29,7 +29,8 @@ const Button = ({ type, label, className, loading }) => {
           ></path>
         </svg>
       ) : null}
-      {label}
+      {icon}
+      <div className="mx-1">{label}</div>
     </button>
   );
 };

@@ -38,7 +38,7 @@ export const getAllTicketController = async (req, res) => {
 export const getSingleTicketController = async (req, res) => {
   try {
     const ticket = await TicketModel.findById(req.params.id);
-console.log('ticket', ticket)
+    console.log("ticket", ticket);
     res.status(200).json({
       success: true,
       message: "Get Single successfully",
@@ -99,11 +99,12 @@ export const UpdateStatusController = async (req, res) => {
 
 export const deleteTicketController = async (req, res) => {
   try {
-    await TicketModel.findByIdAndDelete(req.params.id);
+    const ticket = await TicketModel.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,
       message: "Delete successfully",
+      ticket,
     });
   } catch (error) {
     console.error(`Delete Ticket Error: ${error}`);

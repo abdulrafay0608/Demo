@@ -35,7 +35,7 @@ const menuItemAnimation = {
   }),
 };
 
-const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
+const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen, ...props }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

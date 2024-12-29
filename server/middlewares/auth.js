@@ -38,9 +38,7 @@ export const isAuthenticated = async (req, res, next) => {
 export const checkRole = (...allowedRoles) => {
   return (req, res, next) => {
     try {
-      const userRole = req.user?.role; // Safely access the user's role
-      console.log(" req.cookies", req);
-      console.log(" req.user", req.user);
+      const userRole = req.user?.role;
       if (!userRole) {
         return res.status(401).send({
           success: false,

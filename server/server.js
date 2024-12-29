@@ -2,9 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import DBConnect from "./utils/dbconnection.js";
+import cookieParser from "cookie-parser";
 import ticketsRoutes from "./routes/tickets_routes.js";
 import authRoutes from "./routes/auth_routes.js";
-import cookieParser from "cookie-parser";
+import departmentRoutes from "./routes/departments_route.js";
+import serviceRoutes from "./routes/services_route.js";
+import statusesRoutes from "./routes/status_routes.js";
 
 dotenv.config();
 DBConnect();
@@ -36,6 +39,9 @@ app.use(cookieParser());
 // App Routes
 app.use("/api/tickets", ticketsRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/departments", departmentRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/statuses", statusesRoutes);
 
 // Root Route
 app.get("/", (req, res) => {

@@ -14,6 +14,9 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import TicketEdit from "./pages/Tickets/TicketEdit";
 import TicketView from "./pages/Tickets/TicketView";
 import Loader from "./components/loader/Loader";
+import DepartmentsPage from "./pages/admin/DepartmentsPage";
+import ServicesPage from "./pages/admin/ServicesPage";
+import StatusesPage from "./pages/admin/StatusesPage";
 
 function App() {
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);
@@ -53,10 +56,16 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/tickets" element={<Ticket />} />
-            <Route path="/registeration" element={<RegisterPage />} />
             <Route path="/tickets/add" element={<TicketAdd />} />
             <Route path="/tickets/edit/:id" element={<TicketEdit />} />
             <Route path="/tickets/view/:id" element={<TicketView />} />
+            <Route
+              path="/admin/tickets/departments"
+              element={<DepartmentsPage />}
+            />
+            <Route path="/admin/tickets/services" element={<ServicesPage />} />
+            <Route path="/admin/tickets/statuses" element={<StatusesPage />} />
+            <Route path="/admin/staff" element={<RegisterPage />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
         </SideBar>

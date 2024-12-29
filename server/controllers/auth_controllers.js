@@ -58,7 +58,6 @@ export const SigInController = async (req, res) => {
         message: "The password you entered is incorrect. Please try again",
       });
     }
-    console.log("Request Cookies:", req.cookies.token);
     generateToken(user, 200, "Login successful", res);
   } catch (error) {
     console.error(`Login Error: ${error}`);

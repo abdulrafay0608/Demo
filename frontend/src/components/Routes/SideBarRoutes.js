@@ -7,6 +7,7 @@ import { MdMessage } from "react-icons/md";
 import { BiCog, BiAnalyse, BiCartAlt } from "react-icons/bi";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { FaHome, FaTicketAlt } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 
 export const routes = [
   {
@@ -17,79 +18,122 @@ export const routes = [
   },
   {
     path: "/tickets",
-    name: "Ticket",
+    name: "Support",
     icon: <FaTicketAlt />, // Ticket icon for Tickets
     roles: ["admin", "manager", "user"],
   },
   {
-    path: "/registeration",
-    name: "Register",
+    path: "/customers",
+    name: "Customers",
     icon: <AiOutlineUsergroupAdd />, // Group icon for Registration (admin only)
-    roles: ["admin"],
-  },
-  {
-    path: "/sales",
-    name: "Sales",
-    icon: <MdMessage />, // Message icon for Sales
-    roles: ["admin", "manager"],
-    subRoutes: [
-      {
-        path: "/sales/proposals",
-        name: "Proposals",
-        roles: ["admin", "manager"],
-      },
-      {
-        path: "/sales/invoices",
-        name: "Invoices",
-        roles: ["admin", "manager"],
-      },
-      {
-        path: "/sales/items",
-        name: "Items",
-        roles: ["admin"],
-      },
-    ],
-  },
-  {
-    path: "/subscriptions",
-    name: "Subscriptions",
-    icon: <BiAnalyse />, // Analyse icon for Subscriptions
-    roles: ["admin", "manager"],
-  },
-  {
-    path: "/expenses",
-    name: "Expenses",
-    icon: <BiCartAlt />, // Cart icon for Expenses
-    roles: ["admin", "manager"],
-  },
-  {
-    path: "/contracts",
-    name: "Contracts",
-    icon: <AiFillFileText />, // File icon for Contracts (admin only)
-    roles: ["admin"],
-  },
-  {
-    path: "/projects",
-    name: "Projects",
-    icon: <BiCog />, // Cog icon for Projects
-    roles: ["admin", "manager"],
-  },
-  {
-    path: "/tasks",
-    name: "Tasks",
-    icon: <AiFillHeart />, // Heart icon for Tasks (admin, manager, and user)
     roles: ["admin", "manager", "user"],
-  },
-  {
-    path: "/support",
-    name: "Support",
-    icon: <BsFillShieldLockFill />, // Shield icon for Support
-    roles: ["admin", "user"],
   },
   {
     path: "/reports",
     name: "Reports",
     icon: <AiFillFileText />, // File icon for Reports
     roles: ["admin", "manager"],
+    subRoutes: [
+      {
+        path: "/reports/sales",
+        name: "Sales",
+        roles: ["admin", "manager"],
+      },
+      {
+        path: "/reports/expenses",
+        name: "Expenses",
+        roles: ["admin", "manager"],
+      },
+      {
+        path: "/reports/expenses-vs-income",
+        name: "Expenses vs Income",
+        roles: ["admin"],
+      },
+      {
+        path: "/reports/leads",
+        name: "Leads",
+        roles: ["admin"],
+      },
+      {
+        path: "/reports/timesheets-overview",
+        name: "Timesheets overview",
+        roles: ["admin"],
+      },
+    ],
   },
+  // {
+  //   path: "/setup",
+  //   name: "Setup",
+  //   icon: <IoMdSettings />, // Message icon for Sales
+  //   roles: ["admin"],
+  //   subRoutes: [
+  //     {
+  //       path: "/setup/department",
+  //       name: "Department",
+  //       roles: ["admin"],
+  //     },
+  //     {
+  //       path: "/setup/designation",
+  //       name: "Designation",
+  //       roles: ["admin"],
+  //     },
+  //     {
+  //       path: "/setup/services",
+  //       name: "Services",
+  //       roles: ["admin"],
+  //     },
+  //     {
+  //       path: "/setup/support",
+  //       name: "Support",
+  //       roles: ["admin"],
+  //     },
+  //   ],
+  // },
+];
+
+export const setupRoutes = [
+  {
+    path: "/admin/staff",
+    name: "Staff",
+    roles: ["admin"],
+  },
+  {
+    path: "/admin",
+    name: "Support",
+    roles: ["admin"],
+    subRoutes: [
+      {
+        path: "/admin/tickets/departments",
+        name: "Department",
+        roles: ["admin"],
+      },
+      // {
+      //   path: "/admin/tickets/designation",
+      //   name: "Designation",
+      //   roles: ["admin"],
+      // },
+      {
+        path: "/admin/tickets/priorities",
+        name: "Ticket Priority",
+        roles: ["admin"],
+      },
+      {
+        path: "/admin/tickets/statuses",
+        name: "Ticket Statuses",
+        roles: ["admin"],
+      },
+      {
+        path: "/admin/tickets/services",
+        name: "Services",
+        roles: ["admin"],
+      },
+    ],
+  },
+  {
+    path: "/roles",
+    name: "Role",
+    roles: ["admin"],
+  },
+
+  //
 ];

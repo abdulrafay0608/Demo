@@ -5,6 +5,8 @@ import SidebarMenu from "./SidebarMenu";
 import Navbar from "../Navbar/Navbar";
 import { useSelector } from "react-redux";
 import { routes } from "../Routes/SideBarRoutes";
+import { IoMdSettings } from "react-icons/io";
+import SetupSideBar from "./SetupSideBar";
 
 const SideBar = ({ children }) => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
@@ -15,7 +17,9 @@ const SideBar = ({ children }) => {
     return false;
   });
   const [isOpen, setIsOpen] = useState(true);
+  const [isSetupOpen, setIsSetupOpen] = useState(false); // Setup sidebar state
   const toggle = () => setIsOpen(!isOpen);
+  const toggleSetupSidebar = () => setIsSetupOpen(!isSetupOpen);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,6 +56,7 @@ const SideBar = ({ children }) => {
   return (
     <>
       <Navbar toggle={toggle} />
+
       <div className="main-container">
         <motion.div
           animate={{
@@ -94,9 +99,7 @@ const SideBar = ({ children }) => {
                 <NavLink
                   to={route.path}
                   key={route.name}
-                  className={({ isActive }) =>
-                    isActive ? "link active" : "link"
-                  } // Conditionally add the 'active' class if the route is active
+                  className={({ isActive }) => (isActive ? 'link active' : 'link')}
                 >
                   <div className="icon">{route.icon}</div>
                   <AnimatePresence>
@@ -115,6 +118,22 @@ const SideBar = ({ children }) => {
                 </NavLink>
               );
             })}
+            <button onClick={toggleSetupSidebar} className={"link"}>
+              <div className="icon">{<IoMdSettings />}</div>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    variants={showAnimation}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    className="link_text"
+                  >
+                    Administration
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
           </section>
         </motion.div>
 
@@ -126,6 +145,7 @@ const SideBar = ({ children }) => {
             overflowX: "auto",
           }}
         >
+          <SetupSideBar isSetupOpen={isSetupOpen} setIsSetupOpen={setIsSetupOpen} toggleSetupSidebar={toggleSetupSidebar} />
           {children}
         </main>
       </div>

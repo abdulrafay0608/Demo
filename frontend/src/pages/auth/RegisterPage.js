@@ -41,7 +41,7 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="my-8 w-full max-w-5xl mx-auto">
+    <div className="my-8 w-full max-w-5xl md:mx-auto mx-2">
       <h2 className="font-semibold text-xl m-2">Register Form</h2>
       <div className="text-sm bg-white border flex flex-col justify-between rounded-lg shadow-lg ">
         <form onSubmit={handleSubmit(onSubmit)} className="">
@@ -111,7 +111,7 @@ const RegisterPage = () => {
             <Button
               type="submit"
               label="Register"
-              className="text-nowrap px-3 max-w-min "
+              className="text-nowrap px-3 py-2 max-w-min "
               // loading={loading}
             />
           </div>
