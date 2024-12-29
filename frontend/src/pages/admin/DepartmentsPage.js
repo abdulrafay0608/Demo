@@ -17,11 +17,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
 import { COL_DEPARTMENTS } from "../../components/Table/TableColumns/DepartmentColumns";
-import DepartmentDailogs from "../../components/Dailogs/Departments";
 import {
   AddDepartmentAction,
   GetDepartmentsAction,
 } from "../../actions/departmentAction";
+import DepartmentDialog from "../../components/Dialogs/DepartmentsDialog";
 
 const DepartmentsPage = () => {
   const [initialData, setInitialData] = useState(null);
@@ -107,7 +107,7 @@ const DepartmentsPage = () => {
   return (
     <>
       {open && (
-        <DepartmentDailogs
+        <DepartmentDialog
           isEdit={isEdit}
           initialData={initialData}
           handleClose={handleClose}

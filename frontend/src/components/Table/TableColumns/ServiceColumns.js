@@ -1,4 +1,3 @@
-// In DepartmentColumns.js
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -10,7 +9,7 @@ import {
   EditServiceAction,
   GetServicesAction,
 } from "../../../actions/serviceAction";
-import ServiceDailog from "../../Dailogs/Services";
+import ServiceDialog from "../../Dialogs/ServicesDialog";
 
 export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
   { Header: "# ID", accessor: "_id", Filter: ColumnFilter },
@@ -40,8 +39,8 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
         }
       };
 
-      const handleEdit = (department) => {
-        setInitialData(department);
+      const handleEdit = (service) => {
+        setInitialData(service);
         setIsEdit(true);
         setOpen(true);
       };
@@ -66,7 +65,7 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
             <FiEdit />
           </button>
           {open && (
-            <ServiceDailog
+            <ServiceDialog
               isEdit={true}
               open={open}
               initialData={row.original}
@@ -74,7 +73,6 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
               onSubmit={handleSubmit}
             />
           )}
-          |
           <button
             onClick={() => handleDelete(row.original._id)}
             className="text-base p-1.5 hover:bg-slate-200 rounded-full cursor-pointer"

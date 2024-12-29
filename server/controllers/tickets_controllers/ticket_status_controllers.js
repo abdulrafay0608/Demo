@@ -1,8 +1,8 @@
-import StatusModel from "../models/statusModel.js";
+import TicketStatusModel from "../../models/tickets/ticketStatusModel.js";
 
-export const addStatusController = async (req, res) => {
+export const addTicketStatusController = async (req, res) => {
   try {
-    const existStatus = await StatusModel.findOne({
+    const existStatus = await TicketStatusModel.findOne({
       name: req.body.name,
     });
 
@@ -12,7 +12,7 @@ export const addStatusController = async (req, res) => {
         message: "This status already exists.",
       });
     }
-    const status = await StatusModel.create(req.body);
+    const status = await TicketStatusModel.create(req.body);
     res.status(200).json({
       success: true,
       message: "Status created successfully",
@@ -27,9 +27,9 @@ export const addStatusController = async (req, res) => {
   }
 };
 
-export const getAllStatusController = async (req, res) => {
+export const getAllTicketStatusController = async (req, res) => {
   try {
-    const status = await StatusModel.find();
+    const status = await TicketStatusModel.find();
 
     res.status(200).json({
       success: true,
@@ -45,9 +45,9 @@ export const getAllStatusController = async (req, res) => {
   }
 };
 
-export const deleteStatusController = async (req, res) => {
+export const deleteTicketStatusController = async (req, res) => {
   try {
-    const status = await StatusModel.findByIdAndDelete(req.params.id);
+    const status = await TicketStatusModel.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,
@@ -63,9 +63,9 @@ export const deleteStatusController = async (req, res) => {
   }
 };
 
-export const EditStatusController = async (req, res) => {
+export const EditTicketStatusController = async (req, res) => {
   try {
-    const status = await StatusModel.findByIdAndUpdate(
+    const status = await TicketStatusModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }

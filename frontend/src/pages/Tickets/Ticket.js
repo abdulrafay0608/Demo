@@ -14,7 +14,7 @@ import {
 } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { COL_TICKETS } from "../../components/Table/TableColumns/Columns";
+import { COL_TICKETS } from "../../components/Table/TableColumns/TicketColumns";
 import { GetTicketAction } from "../../actions/ticketAction";
 import Loader from "../../components/loader/Loader";
 

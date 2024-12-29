@@ -16,27 +16,33 @@ import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
-import { COL_SERVICES } from "../../components/Table/TableColumns/ServiceColumns";
-import ServiceDailog from "../../components/Dailogs/Services";
 import {
   AddServiceAction,
   GetServicesAction,
 } from "../../actions/serviceAction";
 import Button from "../../components/Utils/Button";
+import TicketStatusesDialog from "../../components/Dialogs/TicketStatusesDialog";
+import { COL_TICKET_STATUSES } from "../../components/Table/TableColumns/TicketStatusesColumns";
+import {
+  AddTicketStatusesAction,
+  GetTicketStatusesAction,
+} from "../../actions/ticketStatusesAction";
 
-const StatusesPage = () => {
+const TicketStatusesPage = () => {
   const [initialData, setInitialData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state?.user);
-  const { service, loading } = useSelector((state) => state?.service);
+  const { ticket_statuses, loading } = useSelector(
+    (state) => state?.ticket_statuses
+  );
   const columns = useMemo(
-    () => COL_SERVICES({ setInitialData, setIsEdit }),
-    [COL_SERVICES]
+    () => COL_TICKET_STATUSES({ setInitialData, setIsEdit }),
+    [COL_TICKET_STATUSES]
   );
   const data = useMemo(
-    () => (Array.isArray(service) ? service : []),
-    [service]
+    () => (Array.isArray(ticket_statuses) ? ticket_statuses : []),
+    [ticket_statuses]
   );
   const dispatch = useDispatch();
 
@@ -53,20 +59,21 @@ const StatusesPage = () => {
   };
 
   const handleSubmit = (data) => {
-    dispatch(AddServiceAction(data))
+    console.log("data", data);
+    dispatch(AddTicketStatusesAction(data))
       .unwrap()
       .then(() => {
-        toast.success("Service added successfully!");
+        toast.success("Ticket status added successfully!");
         handleClose();
       })
       .catch((err) => {
-        toast.error(err || "Service failed. Please try again.");
+        toast.error(err || "Ticket status failed. Please try again.");
       });
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(GetServicesAction());
+      dispatch(GetTicketStatusesAction());
     }
   }, [isAuthenticated, dispatch]);
 
@@ -104,7 +111,7 @@ const StatusesPage = () => {
   return (
     <>
       {open && (
-        <ServiceDailog
+        <TicketStatusesDialog
           isEdit={isEdit}
           initialData={initialData}
           handleClose={handleClose}
@@ -118,12 +125,13 @@ const StatusesPage = () => {
               type="button"
               label="New Ticket Status"
               icon={<FiPlus />}
+              onClick={handleClickOpen}
               className="text-nowrap px-3 py-2 max-w-min "
               // loading={loading}
             />
             {/* <button
               className="text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
-              onClick={handleClickOpen}
+            
             >
               <span className="flex items-center gap-1.5">
                 <FiPlus />
@@ -322,4 +330,4 @@ const StatusesPage = () => {
   );
 };
 
-export default StatusesPage;
+export default TicketStatusesPage;

@@ -8,8 +8,8 @@ import {
   GetDepartmentsAction,
 } from "../../../actions/departmentAction";
 import { toast } from "react-toastify";
-import DepartmentDailogs from "../../Dailogs/Departments";
 import ColumnFilter from "./ColumnsFilter";
+import DepartmentDialog from "../../Dialogs/DepartmentsDialog";
 
 export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [
   { Header: "# ID", accessor: "_id", Filter: ColumnFilter },
@@ -70,7 +70,7 @@ export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [
             <FiEdit />
           </button>
           {open && (
-            <DepartmentDailogs
+            <DepartmentDialog
               isEdit={true}
               open={open}
               initialData={row.original}
@@ -78,7 +78,6 @@ export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [
               onSubmit={handleSubmit}
             />
           )}
-          |
           <button
             onClick={() => handleDelete(row.original._id)}
             className="text-base p-1.5 hover:bg-slate-200 rounded-full cursor-pointer"

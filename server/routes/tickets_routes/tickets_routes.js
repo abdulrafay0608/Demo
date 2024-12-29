@@ -2,12 +2,12 @@ import express from "express";
 import {
   addTicketController,
   deleteTicketController,
-  getAllTicketController,
   EditTicketController,
+  getAllTicketController,
   getSingleTicketController,
   UpdateStatusController,
-} from "../controllers/tickets_controllers.js";
-import { checkRole, isAuthenticated } from "../middlewares/auth.js";
+} from "../../controllers/tickets_controllers/tickets_controllers.js";
+import { checkRole, isAuthenticated } from "../../middlewares/auth.js";
 
 const router = express.Router();
 // checkRole("admin", "user")

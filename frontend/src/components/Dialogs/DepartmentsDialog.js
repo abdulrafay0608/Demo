@@ -5,7 +5,7 @@ import Button from "../Utils/Button";
 import ButtonLight from "../Utils/ButtonLight";
 import { IoMdClose } from "react-icons/io";
 
-const ServiceDailog = ({ isEdit, initialData, handleClose, onSubmit }) => {
+const DepartmentDialog = ({ isEdit, initialData, handleClose, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -22,7 +22,7 @@ const ServiceDailog = ({ isEdit, initialData, handleClose, onSubmit }) => {
   }, [isEdit, initialData, reset]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-10">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       {/* Background overlay */}
       <div
         onClick={handleClose}
@@ -33,7 +33,7 @@ const ServiceDailog = ({ isEdit, initialData, handleClose, onSubmit }) => {
       <div className="text-black bg-white rounded-xl shadow-xl transform transition-all md:max-w-xl w-full max-h-screen overflow-auto scrollbar-none ">
         <div className="flex justify-between items-center p-5 w-full text-base font-semibold">
           <h3 className="text-center">
-            {isEdit ? "Edit Services" : "New Services"}
+            {isEdit ? "Edit Department" : "New Department"}
           </h3>
           <IoMdClose onClick={handleClose} className="text-lg cursor-pointer" />
         </div>
@@ -50,15 +50,27 @@ const ServiceDailog = ({ isEdit, initialData, handleClose, onSubmit }) => {
         >
           <div className="p-6 space-y-8">
             <Input
-              label="Servive Name"
+              label="Department Name"
               type="text"
               {...register("name", {
-                required: "Service Name is required",
+                required: "Department Name is required",
               })}
               error={errors.name?.message}
-              placeholder="Enter your servivce"
+              placeholder=""
               className="md:px-4 px-2 py-2"
             />
+
+            <Input
+              label="Department Email"
+              type="email"
+              {...register("department_email", {
+                required: "Department Email is required",
+              })}
+              error={errors.department_email?.message}
+              placeholder=""
+              className="md:px-4 px-2 py-2"
+            />
+
             <div className="flex justify-end gap-x-2 px-4 mt-6">
               <div>
                 <ButtonLight
@@ -84,4 +96,4 @@ const ServiceDailog = ({ isEdit, initialData, handleClose, onSubmit }) => {
   );
 };
 
-export default ServiceDailog;
+export default DepartmentDialog;

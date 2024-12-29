@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import DBConnect from "./utils/dbconnection.js";
 import cookieParser from "cookie-parser";
-import ticketsRoutes from "./routes/tickets_routes.js";
+import ticketsRoutes from "./routes/tickets_routes/tickets_routes.js";
 import authRoutes from "./routes/auth_routes.js";
 import departmentRoutes from "./routes/departments_route.js";
 import serviceRoutes from "./routes/services_route.js";
-import statusesRoutes from "./routes/status_routes.js";
+import ticketStatusesRoutes from "./routes/tickets_routes/ticket_status_routes.js";
+import ticketPriorityRoutes from "./routes/tickets_routes/ticket_priority_routes.js";
 
 dotenv.config();
 DBConnect();
@@ -41,7 +42,8 @@ app.use("/api/tickets", ticketsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/services", serviceRoutes);
-app.use("/api/statuses", statusesRoutes);
+app.use("/api/ticket_statuses", ticketStatusesRoutes);
+app.use("/api/ticket_priority", ticketPriorityRoutes);
 
 // Root Route
 app.get("/", (req, res) => {

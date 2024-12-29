@@ -5,14 +5,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ColumnFilter from "./ColumnsFilter";
-import {
-  DeleteServiceAction,
-  EditServiceAction,
-  GetServicesAction,
-} from "../../../actions/serviceAction";
-import ServiceDailog from "../../Dailogs/Services";
+import TicketStatusesDialog from "../../Dialogs/TicketStatusesDialog";
+import { DeleteTicketStatusesAction, EditTicketStatusesAction, GetTicketStatusesAction } from "../../../actions/ticketStatusesAction";
 
-export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
+export const COL_TICKET_STATUSES = ({ setInitialData, setIsEdit }) => [
   { Header: "# ID", accessor: "_id", Filter: ColumnFilter },
   { Header: "Name", accessor: "name", Filter: ColumnFilter },
   {
@@ -26,12 +22,12 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
 
       const handleDelete = async (id) => {
         const confirmed = window.confirm(
-          "Are you sure you want to delete this service?"
+          "Are you sure you want to delete this ticket status?"
         );
         if (confirmed) {
           try {
-            await dispatch(DeleteServiceAction(id)).unwrap();
-            toast.success("service deleted successfully!");
+            await dispatch(DeleteTicketStatusesAction(id)).unwrap();
+            toast.success("ticket status deleted successfully!");
           } catch (error) {
             toast.error(error || "Delete failed. Please try again.");
           }
@@ -40,21 +36,21 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
         }
       };
 
-      const handleEdit = (department) => {
-        setInitialData(department);
+      const handleEdit = (ticketstatus) => {
+        setInitialData(ticketstatus);
         setIsEdit(true);
         setOpen(true);
       };
       const handleSubmit = async (data) => {
         try {
           await dispatch(
-            EditServiceAction({ id: data._id, updatedData: data })
+            EditTicketStatusesAction({ id: data._id, updatedData: data })
           ).unwrap();
-          await dispatch(GetServicesAction());
-          toast.success("Service updated successfully!");
+          await dispatch(GetTicketStatusesAction());
+          toast.success("Ticket status updated successfully!");
           handleClose();
         } catch (error) {
-          toast.error("Failed to update service.");
+          toast.error("Failed to update ticket status.");
         }
       };
       return (
@@ -66,7 +62,7 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
             <FiEdit />
           </button>
           {open && (
-            <ServiceDailog
+            <TicketStatusesDialog
               isEdit={true}
               open={open}
               initialData={row.original}
@@ -74,7 +70,6 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
               onSubmit={handleSubmit}
             />
           )}
-          |
           <button
             onClick={() => handleDelete(row.original._id)}
             className="text-base p-1.5 hover:bg-slate-200 rounded-full cursor-pointer"

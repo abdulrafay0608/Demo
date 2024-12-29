@@ -1,4 +1,4 @@
-import TicketModel from "../models/ticketModel.js";
+import TicketModel from "../../models/tickets/ticketModel.js";
 
 export const addTicketController = async (req, res) => {
   try {

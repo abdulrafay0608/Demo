@@ -50,7 +50,7 @@ const SetupSideBar = ({ isSetupOpen, setIsSetupOpen, toggleSetupSidebar }) => {
 
   return (
     <>
-      <div className="absolute z-50 left-0 bg-[#f4f4f5] border-r border-[#808080] min-h-full">
+      <div className="absolute z-40 left-0 bg-[#f4f4f5] border-r border-[#808080] min-h-full">
         <motion.div
           animate={{
             width: isSetupOpen ? "220px" : "0px",

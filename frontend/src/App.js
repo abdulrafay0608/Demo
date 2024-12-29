@@ -16,11 +16,11 @@ import TicketView from "./pages/Tickets/TicketView";
 import Loader from "./components/loader/Loader";
 import DepartmentsPage from "./pages/admin/DepartmentsPage";
 import ServicesPage from "./pages/admin/ServicesPage";
-import StatusesPage from "./pages/admin/StatusesPage";
+import TicketStatusesPage from "./pages/admin/TicketStatusesPage";
 
 function App() {
-  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
-  const [authChecked, setAuthChecked] = useState(false); // Ensure auth is checked before actions
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const [authChecked, setAuthChecked] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,7 +64,10 @@ function App() {
               element={<DepartmentsPage />}
             />
             <Route path="/admin/tickets/services" element={<ServicesPage />} />
-            <Route path="/admin/tickets/statuses" element={<StatusesPage />} />
+            <Route
+              path="/admin/tickets/statuses"
+              element={<TicketStatusesPage />}
+            />
             <Route path="/admin/staff" element={<RegisterPage />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>

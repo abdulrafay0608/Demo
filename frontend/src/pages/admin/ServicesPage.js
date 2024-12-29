@@ -17,11 +17,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
 import { COL_SERVICES } from "../../components/Table/TableColumns/ServiceColumns";
-import ServiceDailog from "../../components/Dailogs/Services";
 import {
   AddServiceAction,
   GetServicesAction,
 } from "../../actions/serviceAction";
+import ServiceDialog from "../../components/Dialogs/ServicesDialog";
 
 const ServicesPage = () => {
   const [initialData, setInitialData] = useState(null);
@@ -103,7 +103,7 @@ const ServicesPage = () => {
   return (
     <>
       {open && (
-        <ServiceDailog
+        <ServiceDialog
           isEdit={isEdit}
           initialData={initialData}
           handleClose={handleClose}
