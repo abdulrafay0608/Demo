@@ -65,6 +65,16 @@ export const deleteServiceController = async (req, res) => {
 
 export const EditServicesController = async (req, res) => {
   try {
+    const existService = await ServiceModel.findOne({
+      name: req.body.name,
+    });
+
+    if (existService) {
+      return res.status(400).json({
+        success: false,
+        message: "This services already exists.",
+      });
+    }
     const services = await ServiceModel.findByIdAndUpdate(
       req.params.id,
       req.body,

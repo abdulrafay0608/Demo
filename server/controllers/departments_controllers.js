@@ -65,6 +65,16 @@ export const deleteDepartmentController = async (req, res) => {
 
 export const EditDepartmentController = async (req, res) => {
   try {
+    const existDepart = await DepartmentModel.findOne({
+      name: req.body.name,
+    });
+
+    if (existDepart) {
+      return res.status(400).json({
+        success: false,
+        message: "This department already exists.",
+      });
+    }
     const department = await DepartmentModel.findByIdAndUpdate(
       req.params.id,
       req.body,

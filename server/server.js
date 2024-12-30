@@ -9,6 +9,7 @@ import departmentRoutes from "./routes/departments_route.js";
 import serviceRoutes from "./routes/services_route.js";
 import ticketStatusesRoutes from "./routes/tickets_routes/ticket_status_routes.js";
 import ticketPriorityRoutes from "./routes/tickets_routes/ticket_priority_routes.js";
+import ticketSeverityRoutes from "./routes/tickets_routes/ticket_severity_routes.js";
 
 dotenv.config();
 DBConnect();
@@ -44,6 +45,7 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/ticket_statuses", ticketStatusesRoutes);
 app.use("/api/ticket_priority", ticketPriorityRoutes);
+app.use("/api/ticket_severity", ticketSeverityRoutes);
 
 // Root Route
 app.get("/", (req, res) => {

@@ -1,18 +1,19 @@
-// In DepartmentColumns.js
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ColumnFilter from "./ColumnsFilter";
-import TicketStatusesDialog from "../../Dialogs/TicketStatusesDialog";
 import {
-  DeleteTicketStatusesAction,
-  EditTicketStatusesAction,
-  GetTicketStatusesAction,
-} from "../../../actions/ticketStatusesAction";
+  DeleteTicketSeverityAction,
+  EditTicketSeverityAction,
+  GetTicketSeverityAction,
+} from "../../../actions/ticketSeverityAction";
+import TicketSeverityDialog from "../../Dialogs/TicketSeverityDialog";
+import TicketPriorityDialog from "../../Dialogs/TicketPriorityDialog";
+import { DeleteTicketPriorityAction, EditTicketPriorityAction, GetTicketPriorityAction } from "../../../actions/ticketPriorityAction";
 
-export const COL_TICKET_STATUSES = ({ setInitialData, setIsEdit }) => [
+export const COL_TICKET_PRIORITY = ({ setInitialData, setIsEdit }) => [
   { Header: "# ID", accessor: "id", Filter: ColumnFilter },
   { Header: "Name", accessor: "name", Filter: ColumnFilter },
   {
@@ -23,15 +24,14 @@ export const COL_TICKET_STATUSES = ({ setInitialData, setIsEdit }) => [
       const [open, setOpen] = useState(false);
       const handleClose = () => setOpen(false);
       const dispatch = useDispatch();
-
       const handleDelete = async (id) => {
         const confirmed = window.confirm(
-          "Are you sure you want to delete this ticket status?"
+          "Are you sure you want to delete this priority?"
         );
         if (confirmed) {
           try {
-            await dispatch(DeleteTicketStatusesAction(id)).unwrap();
-            toast.success("ticket status deleted successfully!");
+            await dispatch(DeleteTicketPriorityAction(id)).unwrap();
+            toast.success("Ticket Priority deleted successfully!");
           } catch (error) {
             toast.error(error || "Delete failed. Please try again.");
           }
@@ -40,21 +40,21 @@ export const COL_TICKET_STATUSES = ({ setInitialData, setIsEdit }) => [
         }
       };
 
-      const handleEdit = (ticketstatus) => {
-        setInitialData(ticketstatus);
+      const handleEdit = (severity) => {
+        setInitialData(severity);
         setIsEdit(true);
         setOpen(true);
       };
       const handleSubmit = async (data) => {
         try {
           await dispatch(
-            EditTicketStatusesAction({ id: data._id, updatedData: data })
+            EditTicketPriorityAction({ id: data._id, updatedData: data })
           ).unwrap();
-          await dispatch(GetTicketStatusesAction());
-          toast.success("Ticket status updated successfully!");
+          await dispatch(GetTicketPriorityAction());
+          toast.success("Ticket Priority updated successfully!");
           handleClose();
         } catch (error) {
-          toast.error(error || "Failed to update ticket status.");
+          toast.error(error || "Failed to update severity.");
         }
       };
       return (
@@ -66,7 +66,7 @@ export const COL_TICKET_STATUSES = ({ setInitialData, setIsEdit }) => [
             <FiEdit />
           </button>
           {open && (
-            <TicketStatusesDialog
+            <TicketPriorityDialog
               isEdit={true}
               open={open}
               initialData={row.original}

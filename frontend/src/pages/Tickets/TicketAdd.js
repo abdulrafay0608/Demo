@@ -55,7 +55,7 @@ const TicketAdd = () => {
   return (
     <div className="my-4 w-full max-w-5xl mx-auto">
       <button
-        onClick={() => navigate("/tickets")}
+        onClick={() => navigate("/admin4/tickets")}
         className="text-sm flex items-center border border-gray-500 p-1 rounded-lg max-w-min cursor-pointer"
       >
         <FaBackward />

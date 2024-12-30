@@ -58,7 +58,7 @@ export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [
           toast.success("Department updated successfully!");
           handleClose();
         } catch (error) {
-          toast.error("Failed to update department.");
+          toast.error(error || "Failed to update department.");
         }
       };
       return (

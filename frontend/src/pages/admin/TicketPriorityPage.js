@@ -23,18 +23,26 @@ import {
   AddTicketSeverityAction,
   GetTicketSeverityAction,
 } from "../../actions/ticketSeverityAction";
+import { COL_TICKET_PRIORITY } from "../../components/Table/TableColumns/TicketPriorityColumns";
+import { AddTicketPriorityAction, GetTicketPriorityAction } from "../../actions/ticketPriorityAction";
+import TicketPriorityDialog from "../../components/Dialogs/TicketPriorityDialog";
 
-const TicketSeverityPage = () => {
+const TicketPriorityPage = () => {
   const [initialData, setInitialData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state?.user);
-  const { ticket_severity, loading } = useSelector((state) => state?.ticket_severity);
-  
-  const columns = useMemo(() => COL_TICKET_SEVERITY({ setInitialData, setIsEdit }),[COL_TICKET_SEVERITY]);
+  const { ticket_priority, loading } = useSelector(
+    (state) => state?.ticket_priority
+  );
+
+  const columns = useMemo(
+    () => COL_TICKET_PRIORITY({ setInitialData, setIsEdit }),
+    [COL_TICKET_PRIORITY]
+  );
   const data = useMemo(
-    () => (Array.isArray(ticket_severity) ? ticket_severity : []),
-    [ticket_severity]
+    () => (Array.isArray(ticket_priority) ? ticket_priority : []),
+    [ticket_priority]
   );
   const dispatch = useDispatch();
 
@@ -51,20 +59,20 @@ const TicketSeverityPage = () => {
   };
 
   const handleSubmit = (data) => {
-    dispatch(AddTicketSeverityAction(data))
+    dispatch(AddTicketPriorityAction(data))
       .unwrap()
       .then(() => {
-        toast.success("Severity added successfully!");
+        toast.success("Priority added successfully!");
         handleClose();
       })
       .catch((err) => {
-        toast.error(err || "Severity failed. Please try again.");
+        toast.error(err || "Priority failed. Please try again.");
       });
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(GetTicketSeverityAction());
+      dispatch(GetTicketPriorityAction());
     }
   }, [isAuthenticated, dispatch]);
 
@@ -102,7 +110,7 @@ const TicketSeverityPage = () => {
   return (
     <>
       {open && (
-        <TicketSeverityDialog
+        <TicketPriorityDialog
           isEdit={isEdit}
           initialData={initialData}
           handleClose={handleClose}
@@ -114,7 +122,7 @@ const TicketSeverityPage = () => {
           <div className="flex m-3 text-sm space-x-2">
             <Button
               type="button"
-              label="New Ticket Severity"
+              label="New Ticket Priority"
               icon={<FiPlus />}
               onClick={handleClickOpen}
               className="text-nowrap px-3 py-2 max-w-min "
@@ -305,4 +313,4 @@ const TicketSeverityPage = () => {
   );
 };
 
-export default TicketSeverityPage;
+export default TicketPriorityPage;

@@ -99,7 +99,9 @@ const SideBar = ({ children }) => {
                 <NavLink
                   to={route.path}
                   key={route.name}
-                  className={({ isActive }) => (isActive ? 'link active' : 'link')}
+                  className={({ isActive }) =>
+                    isActive ? "link active" : "link"
+                  }
                 >
                   <div className="icon">{route.icon}</div>
                   <AnimatePresence>
@@ -118,22 +120,24 @@ const SideBar = ({ children }) => {
                 </NavLink>
               );
             })}
-            <button onClick={toggleSetupSidebar} className={"link"}>
-              <div className="icon">{<IoMdSettings />}</div>
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    variants={showAnimation}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                    className="link_text"
-                  >
-                    Administration
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
+            {user.role === "admin" && (
+              <button onClick={toggleSetupSidebar} className={"link"}>
+                <div className="icon">{<IoMdSettings />}</div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      variants={showAnimation}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                      className="link_text"
+                    >
+                      Administration
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+            )}
           </section>
         </motion.div>
 
@@ -145,7 +149,11 @@ const SideBar = ({ children }) => {
             overflowX: "auto",
           }}
         >
-          <SetupSideBar isSetupOpen={isSetupOpen} setIsSetupOpen={setIsSetupOpen} toggleSetupSidebar={toggleSetupSidebar} />
+          <SetupSideBar
+            isSetupOpen={isSetupOpen}
+            setIsSetupOpen={setIsSetupOpen}
+            toggleSetupSidebar={toggleSetupSidebar}
+          />
           {children}
         </main>
       </div>

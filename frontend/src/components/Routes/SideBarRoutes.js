@@ -1,13 +1,8 @@
 import {
-  AiFillHeart,
   AiFillFileText,
   AiOutlineUsergroupAdd,
 } from "react-icons/ai";
-import { MdMessage } from "react-icons/md";
-import { BiCog, BiAnalyse, BiCartAlt } from "react-icons/bi";
-import { BsFillShieldLockFill } from "react-icons/bs";
 import { FaHome, FaTicketAlt } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
 
 export const routes = [
   {
@@ -17,13 +12,13 @@ export const routes = [
     roles: ["admin", "manager", "user"],
   },
   {
-    path: "/tickets",
+    path: "/admin/tickets",
     name: "Support",
     icon: <FaTicketAlt />, // Ticket icon for Tickets
     roles: ["admin", "manager", "user"],
   },
   {
-    path: "/customers",
+    path: "/admin/customers",
     name: "Customers",
     icon: <AiOutlineUsergroupAdd />, // Group icon for Registration (admin only)
     roles: ["admin", "manager", "user"],

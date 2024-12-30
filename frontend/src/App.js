@@ -18,6 +18,7 @@ import DepartmentsPage from "./pages/admin/DepartmentsPage";
 import ServicesPage from "./pages/admin/ServicesPage";
 import TicketStatusesPage from "./pages/admin/TicketStatusesPage";
 import TicketSeverityPage from "./pages/admin/TicketSeverityPage";
+import TicketPriorityPage from "./pages/admin/TicketPriorityPage";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -56,10 +57,10 @@ function App() {
         <SideBar>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/tickets" element={<Ticket />} />
-            <Route path="/tickets/add" element={<TicketAdd />} />
-            <Route path="/tickets/edit/:id" element={<TicketEdit />} />
-            <Route path="/tickets/view/:id" element={<TicketView />} />
+            <Route path="/admin/tickets" element={<Ticket />} />
+            <Route path="/admin/tickets/add" element={<TicketAdd />} />
+            <Route path="/admin/tickets/edit/:id" element={<TicketEdit />} />
+            <Route path="/admin/tickets/view/:id" element={<TicketView />} />
             <Route
               path="/admin/tickets/departments"
               element={<DepartmentsPage />}
@@ -68,6 +69,10 @@ function App() {
             <Route
               path="/admin/tickets/severity"
               element={<TicketSeverityPage />}
+            />
+            <Route
+              path="/admin/tickets/priorities"
+              element={<TicketPriorityPage />}
             />
             <Route
               path="/admin/tickets/statuses"

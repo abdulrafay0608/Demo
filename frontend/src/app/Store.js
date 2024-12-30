@@ -4,6 +4,8 @@ import ticketSlice from "../feature/ticket/ticketSlice";
 import departmentSlice from "../feature/adminSlice/departmentSlice";
 import serviceSlice from "../feature/adminSlice/serviceSlice";
 import ticketStatusesSlice from "../feature/adminSlice/ticketStatusesSlice";
+import ticketSeveritySlice from "../feature/adminSlice/ticketSeveritySlice";
+import ticketPrioritySlice from "../feature/adminSlice/ticketPrioritySlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ const store = configureStore({
     department: departmentSlice,
     service: serviceSlice,
     ticket_statuses: ticketStatusesSlice,
+    ticket_severity: ticketSeveritySlice,
+    ticket_priority: ticketPrioritySlice,
   },
 });
 

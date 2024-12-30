@@ -53,7 +53,7 @@ export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
           toast.success("Service updated successfully!");
           handleClose();
         } catch (error) {
-          toast.error("Failed to update service.");
+          toast.error(error||"Failed to update service.");
         }
       };
       return (

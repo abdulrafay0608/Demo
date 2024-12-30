@@ -74,7 +74,7 @@ const Ticket = () => {
         <div className="flex m-3 text-sm space-x-2">
           <button
             className="text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
-            onClick={() => navigate("/tickets/add")}
+            onClick={() => navigate("/admin/tickets/add")}
           >
             <span className="flex items-center gap-1.5">
               <FiPlus />

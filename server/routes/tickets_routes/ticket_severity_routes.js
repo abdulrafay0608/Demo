@@ -2,34 +2,34 @@ import express from "express";
 
 import { checkRole, isAuthenticated } from "../../middlewares/auth.js";
 import {
-  addTicketPriorityController,
-  deleteTicketPriorityController,
-  EditTicketPriorityController,
-  getAllTicketPriorityController,
-} from "../../controllers/tickets_controllers/ticket_priority_controllers.js";
+  addTicketSeverityController,
+  deleteTicketSeverityController,
+  EditTicketSeverityController,
+  getAllTicketSeverityController,
+} from "../../controllers/tickets_controllers/ticket_severity_controllers.js";
 
 const router = express.Router();
 
-router.get("/get", getAllTicketPriorityController);
+router.get("/get", getAllTicketSeverityController);
 
 router.post(
   "/add",
   isAuthenticated,
   checkRole("admin"),
-  addTicketPriorityController
+  addTicketSeverityController
 );
 router.put(
   "/edit/:id",
   isAuthenticated,
   checkRole("admin"),
-  EditTicketPriorityController
+  EditTicketSeverityController
 );
 
 router.delete(
   "/delete/:id",
   isAuthenticated,
   checkRole("admin"),
-  deleteTicketPriorityController
+  deleteTicketSeverityController
 );
 
 export default router;
