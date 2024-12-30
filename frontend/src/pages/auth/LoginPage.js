@@ -33,9 +33,14 @@ const LoginPage = () => {
     console.log(data);
     dispatch(LoginAction(data))
       .unwrap()
-      .then(() => {
+      .then((response) => {
         toast.success("Login successful!");
-        navigate("/dashboard");
+        const userRole = response?.role;
+        if (userRole === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/dashboard");
+        }
       })
       .catch((err) => {
         toast.error(err || "Login failed. Please try again.");
@@ -43,7 +48,7 @@ const LoginPage = () => {
   };
 
   if (loading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (

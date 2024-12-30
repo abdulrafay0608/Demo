@@ -19,7 +19,7 @@ import { GetTicketAction } from "../../actions/ticketAction";
 import Loader from "../../components/loader/Loader";
 import { GetTicketStatusesAction } from "../../actions/ticketStatusesAction";
 
-const Ticket = () => {
+const UserTicketPage = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const { allTickets, loading } = useSelector((state) => state.ticket);
   const { ticket_statuses } = useSelector((state) => state?.ticket_statuses);
@@ -290,4 +290,4 @@ const Ticket = () => {
   );
 };
 
-export default Ticket;
+export default UserTicketPage;

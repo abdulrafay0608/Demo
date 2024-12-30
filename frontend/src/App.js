@@ -7,7 +7,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadAction } from "./actions/authActions";
 import store from "./app/Store";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/admin/Dashboard";
 import TicketAdd from "./pages/Tickets/TicketAdd";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -19,9 +19,11 @@ import ServicesPage from "./pages/admin/ServicesPage";
 import TicketStatusesPage from "./pages/admin/TicketStatusesPage";
 import TicketSeverityPage from "./pages/admin/TicketSeverityPage";
 import TicketPriorityPage from "./pages/admin/TicketPriorityPage";
+import UserTicketPage from "./pages/users/UserTicketPage";
+import UserDashboardPage from "./pages/users/UserDashboardPage";
 
 function App() {
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [authChecked, setAuthChecked] = useState(false);
   const dispatch = useDispatch();
 
@@ -53,10 +55,10 @@ function App() {
         theme="light"
         transition={Bounce}
       />
-      {isAuthenticated ? (
+      {isAuthenticated && user?.role === "admin" ? (
         <SideBar>
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/tickets" element={<Ticket />} />
             <Route path="/admin/tickets/add" element={<TicketAdd />} />
             <Route path="/admin/tickets/edit/:id" element={<TicketEdit />} />
@@ -82,6 +84,11 @@ function App() {
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
         </SideBar>
+      ) : isAuthenticated ? (
+        <Routes>
+          <Route path="/dashboard" element={<UserDashboardPage />} />
+          <Route path="/clients/open_ticket" element={<UserTicketPage />} />
+        </Routes>
       ) : (
         <Routes>
           <Route path="/" element={<LoginPage />} />

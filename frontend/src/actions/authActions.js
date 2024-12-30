@@ -71,3 +71,20 @@ export const logoutAction = createAsyncThunk(
     }
   }
 );
+
+
+export const GetAllUserAction = createAsyncThunk(
+  "auth/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${API_BASE_URL}/auth/get`);
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);

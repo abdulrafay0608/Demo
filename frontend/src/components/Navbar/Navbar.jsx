@@ -14,6 +14,13 @@ import {
   Tooltip,
   Divider,
   ListItemIcon,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  CssBaseline,
+  Drawer,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -25,11 +32,12 @@ import {
   PersonAdd,
   Settings,
   Logout,
+  Adb as AdbIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutAction } from "../../actions/authActions";
 import Loader from "../loader/Loader";
 
@@ -85,11 +93,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({ toggle }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const { user, loading } = useSelector((state) => state.user);
+// For User
+const drawerWidth = 240;
+const navItems = ["Projects", "Support"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
+const Navbar = ({ window, toggle }) => {
+  const { user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const LogoutFunc = () => {
@@ -103,6 +113,11 @@ const Navbar = ({ toggle }) => {
         toast.error(err || "Logout failed. Please try again.");
       });
   };
+
+  // For Admin
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -225,116 +240,155 @@ const Navbar = ({ toggle }) => {
     </Menu>
   );
 
+  // For User
+
+  // const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Abdul Rafay Tech
+      </Typography>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "#ffffff",
-          color: "#444952",
-          boxShadow: "none",
-          borderBottom: "1px solid #808080",
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            onClick={toggle}
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 1 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
+    <>
+      {user.role === "admin" ? (
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar
+            position="static"
             sx={{
-              fontWeight: 800,
-              fontFamily: "inherit",
-              display: { xs: "none", sm: "block" },
+              backgroundColor: "#ffffff",
+              color: "#444952",
+              boxShadow: "none",
+              borderBottom: "1px solid #808080",
             }}
           >
-            Abdul Rafay Tech
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Typography
-            // variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              mr: 4,
-              fontWeight: 600,
-              color: "grey",
-              "&:hover": {
-                color: "#444952",
-              },
-              fontFamily: "inherit",
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            Customers area
-          </Typography>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-              sx={{ mr: 2 }}
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon
-                  sx={{
-                    color: "grey",
-                    "&:hover": {
-                      color: "#444952",
-                    },
-                  }}
-                />
-              </Badge>
-            </IconButton>
-            <IconButton
-              sx={{ mr: 2 }}
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon
-                  sx={{
-                    color: "grey",
-                    "&:hover": {
-                      color: "#444952",
-                    },
-                  }}
-                />
-              </Badge>
-            </IconButton>
-            <Tooltip title="Account settings">
+            <Toolbar>
               <IconButton
+                onClick={toggle}
                 size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                edge="start"
                 color="inherit"
+                sx={{ mr: 1 }}
               >
-                {/* <AccountCircle
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  fontWeight: 800,
+                  fontFamily: "inherit",
+                  display: { xs: "none", sm: "block" },
+                }}
+              >
+                Abdul Rafay Tech
+              </Typography>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+              <Box sx={{ flexGrow: 1 }} />
+              <Typography
+                // variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  mr: 4,
+                  fontWeight: 600,
+                  color: "grey",
+                  "&:hover": {
+                    color: "#444952",
+                  },
+                  fontFamily: "inherit",
+                  display: { xs: "none", sm: "block" },
+                }}
+              >
+                Customers area
+              </Typography>
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                  sx={{ mr: 2 }}
+                >
+                  <Badge badgeContent={4} color="error">
+                    <MailIcon
+                      sx={{
+                        color: "grey",
+                        "&:hover": {
+                          color: "#444952",
+                        },
+                      }}
+                    />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  sx={{ mr: 2 }}
+                  size="large"
+                  aria-label="show 17 new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={17} color="error">
+                    <NotificationsIcon
+                      sx={{
+                        color: "grey",
+                        "&:hover": {
+                          color: "#444952",
+                        },
+                      }}
+                    />
+                  </Badge>
+                </IconButton>
+                <Tooltip title="Account settings">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    {/* <AccountCircle
                   sx={{
                     color: "grey",
                     "&:hover": {
@@ -342,38 +396,153 @@ const Navbar = ({ toggle }) => {
                     },
                   }}
                 /> */}
-                <Avatar
-                  sx={{
-                    width: 28,
-                    height: 28,
-                    color: "grey",
-                    "&:hover": {
-                      color: "#444952",
-                    },
-                  }}
+                    <Avatar
+                      sx={{
+                        width: 28,
+                        height: 28,
+                        color: "grey",
+                        "&:hover": {
+                          color: "#444952",
+                        },
+                      }}
+                    >
+                      {user?.username?.substring(0, 1)}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
                 >
-                  {user?.username?.substring(0, 1)}
-                </Avatar>
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {renderMobileMenu}
+          {renderMenu}
+        </Box>
+      ) : (
+        <Box sx={{ display: "flex", marginX: "auto" }}>
+          <CssBaseline />
+          <AppBar
+            component="nav"
+            sx={{
+              backgroundColor: "#ffffff",
+              color: "#444952",
+              boxShadow: "none",
+              borderBottom: "1px solid #808080",
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, fontWeight: 800, fontFamily: "inherit" }}
+              >
+                Abdul Rafay Tech
+              </Typography>
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "flex" },
+                  gap: "15px",
+                  marginRight: "20px",
+                }}
+              >
+                {navItems.map((item) => (
+                  <Link
+                    to={"/"}
+                    key={item}
+                    sx={{
+                      fontFamily: "inherit",
+                      color: "#444952",
+                      padding: "8px 16px", // Add padding for better UX
+                      transition: "all 0.3s ease", // Smooth hover effect
+                      "&:hover": {
+                        color: "#000000",
+                        backgroundColor: "#f0f0f0", // Light background color on hover
+                        borderRadius: "8px", // Add rounded corners
+                      },
+                    }}
+                  >
+                    {item}
+                  </Link>
+                ))}
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          <nav>
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: "block", sm: "none" },
+                "& .MuiDrawer-paper": {
+                  boxSizing: "border-box",
+                  width: drawerWidth,
+                },
+              }}
             >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+              {drawer}
+            </Drawer>
+          </nav>
+        </Box>
+      )}
+    </>
   );
 };
 

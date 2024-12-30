@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Input from "../../components/Utils/Input";
 import { Controller, useForm } from "react-hook-form";
 import { FaTag } from "react-icons/fa";
@@ -6,15 +6,7 @@ import Button from "../../components/Utils/Button";
 import JoditEditor from "jodit-react";
 import ReusableSelect from "../../components/Utils/ReusableSelect";
 import MultiSelect from "../../components/Utils/MultiSelect";
-import {
-  assignTickets,
-  contacts,
-  departments,
-  knowledgeBaseLinks,
-  priorities,
-  services,
-  ticketBodies,
-} from "../../components/Utils/constant";
+import { contacts } from "../../components/Utils/constant";
 import { FaBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,13 +14,25 @@ import { AddTicketAction } from "../../actions/ticketAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
+import { GetTicketPriorityAction } from "../../actions/ticketPriorityAction";
+import { GetDepartmentsAction } from "../../actions/departmentAction";
+import { GetTicketSeverityAction } from "../../actions/ticketSeverityAction";
+import { GetServicesAction } from "../../actions/serviceAction";
+import { GetTicketStatusesAction } from "../../actions/ticketStatusesAction";
+import { GetAllUserAction } from "../../actions/authActions";
 
 const TicketAdd = () => {
+  const { isAuthenticated, all_user } = useSelector((state) => state?.user);
+  const { ticket_statuses } = useSelector((state) => state?.ticket_statuses);
+  const { ticket_severity } = useSelector((state) => state?.ticket_severity);
+  const { ticket_priority } = useSelector((state) => state?.ticket_priority);
+  const { department } = useSelector((state) => state?.department);
+  const { service } = useSelector((state) => state?.service);
+  const { loading } = useSelector((state) => state.ticket);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const editor = useRef(null);
-
-  const { loading } = useSelector((state) => state.ticket);
 
   const {
     register,
@@ -48,6 +52,17 @@ const TicketAdd = () => {
         toast.error(error || "Failed to add ticket. Please try again.");
       });
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(GetTicketPriorityAction());
+      dispatch(GetServicesAction());
+      dispatch(GetDepartmentsAction());
+      dispatch(GetTicketSeverityAction());
+      dispatch(GetTicketStatusesAction());
+      dispatch(GetAllUserAction());
+    }
+  }, [isAuthenticated, dispatch]);
 
   if (loading) {
     return <Loader />;
@@ -77,23 +92,7 @@ const TicketAdd = () => {
                 className="md:px-4 px-2 py-2"
               />
 
-              {/* <Select
-                label="Contact"
-                name="contact"
-                options={contacts.map((contact) => ({
-                  value: contact?._id,
-                  label: contact?.name,
-                  _id: contact?._id,
-                }))}
-                {...register("contact", {
-                  required: "Contact is required",
-                })}
-                error={errors.contact?.message}
-                value={selectedCountry}
-                onChange={(value) => setSelectedCountry(value)}
-                placeholder="Select your contact"
-              /> */}
-              <Controller
+              {/* <Controller
                 name="contact"
                 control={control}
                 rules={{ required: "Contact is required" }}
@@ -111,7 +110,7 @@ const TicketAdd = () => {
                     placeholder="Select your contact"
                   />
                 )}
-              />
+              /> */}
               <div className="flex gap-x-6 w-full">
                 <div className="w-1/2">
                   <Input
@@ -134,9 +133,9 @@ const TicketAdd = () => {
                         name={field.name}
                         value={field.value}
                         onChange={field.onChange}
-                        options={departments.map((depart) => ({
-                          value: depart?.department,
-                          label: depart?.department,
+                        options={department.map((depart) => ({
+                          value: depart?._id,
+                          label: depart?.name,
                         }))}
                         error={errors.department?.message}
                         placeholder="Select your department"
@@ -215,16 +214,19 @@ const TicketAdd = () => {
                     name={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    options={assignTickets.map((at) => ({
-                      value: at?.assign_ticket,
-                      label: at?.assign_ticket,
+                    options={all_user.map((user) => ({
+                      value: user?._id,
+                      label: user?.username,
                     }))}
                     error={errors.assign_ticket?.message}
                     placeholder="Select your assign ticket"
                   />
                 )}
               />
-
+              {/* user?.map((u) => ({
+                      value: u?._id,
+                      label: u?.username,
+                    })) */}
               <div className="flex gap-x-6 w-full">
                 <div className="w-1/2">
                   <Controller
@@ -237,12 +239,31 @@ const TicketAdd = () => {
                         name={field.name}
                         value={field.value}
                         onChange={field.onChange}
-                        options={priorities.map((priority) => ({
-                          value: priority?.priority,
-                          label: priority?.priority,
+                        options={ticket_priority.map((priority) => ({
+                          value: priority?._id,
+                          label: priority?.name,
                         }))}
                         error={errors.priority?.message}
                         placeholder="Select your Priority"
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="severity"
+                    control={control}
+                    rules={{ required: "Severity is required" }}
+                    render={({ field }) => (
+                      <ReusableSelect
+                        label="Severity"
+                        name={field.name}
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={ticket_severity.map((severity) => ({
+                          value: severity?._id,
+                          label: severity?.name,
+                        }))}
+                        error={errors.severity?.message}
+                        placeholder="Select your severity"
                       />
                     )}
                   />
@@ -258,36 +279,40 @@ const TicketAdd = () => {
                         name={field.name}
                         value={field.value}
                         onChange={field.onChange}
-                        options={services.map((service) => ({
-                          value: service?.service,
-                          label: service?.service,
+                        options={service.map((service) => ({
+                          value: service?._id,
+                          label: service?.name,
                         }))}
                         error={errors.service?.message}
                         placeholder="Select your service"
                       />
                     )}
                   />
-                  {/* <Select
-                    label="Service"
-                    name="service"
-                    options={contacts.map((contact) => ({
-                      value: contact?._id,
-                      label: contact?.name,
-                      _id: contact?._id,
-                    }))}
-                    value={""}
-                    {...register("priority", {
-                      required: "Priority is required",
-                    })}
-                    error={errors.priority?.message}
-                    placeholder="Select your priority"
-                  /> */}
+                  <Controller
+                    name="status"
+                    control={control}
+                    rules={{ required: "Ticket Status is required" }}
+                    render={({ field }) => (
+                      <ReusableSelect
+                        label="Ticket Status"
+                        name={field.name}
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={ticket_statuses.map((status) => ({
+                          value: status?._id,
+                          label: status?.name,
+                        }))}
+                        error={errors.status?.message}
+                        placeholder="Select your status"
+                      />
+                    )}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <hr />
-          <div className="flex gap-x-6 w-full p-6">
+          {/* <div className="flex gap-x-6 w-full p-6">
             <div className="w-1/2">
               {" "}
               <Controller
@@ -313,26 +338,6 @@ const TicketAdd = () => {
                   />
                 )}
               />
-              {/* <Select
-                label={
-                  <>
-                    <span className="font-bold">Ticket Body</span>
-                  </>
-                }
-                name="ticket_body"
-                options={contacts.map((contact) => ({
-                  value: contact?._id,
-                  label: contact?.name,
-                  _id: contact?._id,
-                }))}
-                {...register("ticket_body", {
-                  required: "Ticket body is required",
-                })}
-                error={errors.ticket_body?.message}
-                value={selectedCountry}
-                onChange={(value) => setSelectedCountry(value)}
-                placeholder="Insert predefined reply"
-              /> */}
             </div>
             <div className="w-1/2">
               <Controller
@@ -359,7 +364,7 @@ const TicketAdd = () => {
                 )}
               />
             </div>
-          </div>
+          </div> */}
           <div className="flex gap-x-6 w-full px-6">
             <Controller
               name="body"

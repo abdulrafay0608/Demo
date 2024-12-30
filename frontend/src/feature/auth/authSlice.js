@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  GetAllUserAction,
   LoadAction,
   LoginAction,
   logoutAction,
@@ -8,6 +9,7 @@ import {
 
 const initialState = {
   user: {},
+  all_user: [],
   isAuthenticated: false,
   loading: false,
   error: null,
@@ -22,6 +24,10 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    const handleError = (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    };
     builder
       .addCase(LoginAction.pending, (state) => {
         state.loading = true;
@@ -85,7 +91,16 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(GetAllUserAction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetAllUserAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.all_user = action.payload.user;
+      })
+      .addCase(GetAllUserAction.rejected, handleError);
   },
 });
 
