@@ -15,24 +15,24 @@ import {
 import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../components/loader/Loader";
-import { COL_SERVICES } from "../../components/Table/TableColumns/ServiceColumns";
+import Loader from "../../components/loader/Loader";  
 import {
   AddServiceAction,
   GetServicesAction,
 } from "../../actions/serviceAction";
-import ServiceDialog from "../../components/Dialogs/ServicesDialog";
 import Button from "../../components/Utils/Button";
+import TicketSeverityDialog from "../../components/Dialogs/TicketSeverityDialog";
+import { COL_TICKET_SEVERITY } from "../../components/Table/TableColumns/TicketSeverityColumns";
 
-const ServicesPage = () => {
+const TicketSeverityPage = () => {
   const [initialData, setInitialData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state?.user);
   const { service, loading } = useSelector((state) => state?.service);
   const columns = useMemo(
-    () => COL_SERVICES({ setInitialData, setIsEdit }),
-    [COL_SERVICES]
+    () => COL_TICKET_SEVERITY({ setInitialData, setIsEdit }),
+    [COL_TICKET_SEVERITY]
   );
   const data = useMemo(
     () => (Array.isArray(service) ? service : []),
@@ -104,7 +104,7 @@ const ServicesPage = () => {
   return (
     <>
       {open && (
-        <ServiceDialog
+        <TicketSeverityDialog
           isEdit={isEdit}
           initialData={initialData}
           handleClose={handleClose}
@@ -322,4 +322,4 @@ const ServicesPage = () => {
   );
 };
 
-export default ServicesPage;
+export default TicketSeverityPage;

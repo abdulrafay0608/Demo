@@ -17,6 +17,7 @@ import Loader from "./components/loader/Loader";
 import DepartmentsPage from "./pages/admin/DepartmentsPage";
 import ServicesPage from "./pages/admin/ServicesPage";
 import TicketStatusesPage from "./pages/admin/TicketStatusesPage";
+import TicketSeverityPage from "./pages/admin/TicketSeverityPage";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -64,6 +65,10 @@ function App() {
               element={<DepartmentsPage />}
             />
             <Route path="/admin/tickets/services" element={<ServicesPage />} />
+            <Route
+              path="/admin/tickets/severity"
+              element={<TicketSeverityPage />}
+            />
             <Route
               path="/admin/tickets/statuses"
               element={<TicketStatusesPage />}

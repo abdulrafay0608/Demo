@@ -12,7 +12,7 @@ import {
 import ServiceDialog from "../../Dialogs/ServicesDialog";
 
 export const COL_SERVICES = ({ setInitialData, setIsEdit }) => [
-  { Header: "# ID", accessor: "_id", Filter: ColumnFilter },
+  { Header: "# ID", accessor: "id", Filter: ColumnFilter },
   { Header: "Name", accessor: "name", Filter: ColumnFilter },
   {
     Header: "Options",

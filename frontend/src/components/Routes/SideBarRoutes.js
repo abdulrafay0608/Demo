@@ -113,6 +113,11 @@ export const setupRoutes = [
       //   roles: ["admin"],
       // },
       {
+        path: "/admin/tickets/severity",
+        name: "Ticket Severity",
+        roles: ["admin"],
+      },
+      {
         path: "/admin/tickets/priorities",
         name: "Ticket Priority",
         roles: ["admin"],

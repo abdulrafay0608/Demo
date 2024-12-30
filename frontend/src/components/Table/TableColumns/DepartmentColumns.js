@@ -12,7 +12,7 @@ import ColumnFilter from "./ColumnsFilter";
 import DepartmentDialog from "../../Dialogs/DepartmentsDialog";
 
 export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [
-  { Header: "# ID", accessor: "_id", Filter: ColumnFilter },
+  { Header: "# ID", accessor: "id", Filter: ColumnFilter },
   { Header: "Name", accessor: "name", Filter: ColumnFilter },
   {
     Header: "Department Email",
