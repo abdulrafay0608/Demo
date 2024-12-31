@@ -491,7 +491,7 @@ const Navbar = ({ window, toggle }) => {
                       transition: "all 0.3s ease", // Smooth hover effect
                       "&:hover": {
                         color: "#000000",
-                        backgroundColor: "#cccccc", 
+                        backgroundColor: "#cccccc",
                         borderRadius: "8px", // Add rounded corners
                       },
                     }}
@@ -526,7 +526,15 @@ const Navbar = ({ window, toggle }) => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <MenuItem
+                      key={setting}
+                      onClick={() => {
+                        handleCloseUserMenu(); // Menu close karna
+                        if (setting === "Logout") {
+                          LogoutFunc(); // Logout function call karna
+                        }
+                      }}
+                    >
                       <Typography sx={{ textAlign: "center" }}>
                         {setting}
                       </Typography>
