@@ -53,6 +53,23 @@ export const getSingleTicketController = async (req, res) => {
   }
 };
 
+export const getUserTicketController = async (req, res) => {
+  try {
+    const ticket = await TicketModel.findById({ created_by: req.params.id });
+    res.status(200).json({
+      success: true,
+      message: "Get User Ticket successfully",
+      ticket,
+    });
+  } catch (error) {
+    console.error(`Get User Ticket Error: ${error}`);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again",
+    });
+  }
+};
+
 export const EditTicketController = async (req, res) => {
   try {
     const ticket = await TicketModel.findByIdAndUpdate(

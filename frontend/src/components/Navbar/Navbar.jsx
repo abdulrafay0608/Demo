@@ -14,7 +14,6 @@ import {
   Tooltip,
   Divider,
   ListItemIcon,
-  Button,
   List,
   ListItem,
   ListItemText,
@@ -32,7 +31,6 @@ import {
   PersonAdd,
   Settings,
   Logout,
-  Adb as AdbIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -95,7 +93,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // For User
 const drawerWidth = 240;
-const navItems = ["Projects", "Support"];
+const navItems = [
+  {
+    path: "/clients/tickets",
+    name: "Support",
+  },
+  {
+    path: "/clients/projects",
+    name: "Projects",
+  },
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = ({ window, toggle }) => {
@@ -265,9 +272,9 @@ const Navbar = ({ window, toggle }) => {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.name} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -429,15 +436,24 @@ const Navbar = ({ window, toggle }) => {
           {renderMenu}
         </Box>
       ) : (
-        <Box sx={{ display: "flex", marginX: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            borderBottom: "1px solid ##444952",
+            boxShadow: "1px 2px 3px #F3F4F6",
+          }}
+        >
           <CssBaseline />
           <AppBar
-            component="nav"
+            position="static"
             sx={{
+              boxShadow: "none",
               backgroundColor: "#ffffff",
               color: "#444952",
-              boxShadow: "none",
-              borderBottom: "1px solid #808080",
+              paddingY: "12px",
+              width: "100%",
+              maxWidth: "1280px",
+              marginX: "auto",
             }}
           >
             <Toolbar>
@@ -466,8 +482,8 @@ const Navbar = ({ window, toggle }) => {
               >
                 {navItems.map((item) => (
                   <Link
-                    to={"/"}
-                    key={item}
+                    to={item.path}
+                    key={item.name}
                     sx={{
                       fontFamily: "inherit",
                       color: "#444952",
@@ -475,12 +491,12 @@ const Navbar = ({ window, toggle }) => {
                       transition: "all 0.3s ease", // Smooth hover effect
                       "&:hover": {
                         color: "#000000",
-                        backgroundColor: "#f0f0f0", // Light background color on hover
+                        backgroundColor: "#cccccc", 
                         borderRadius: "8px", // Add rounded corners
                       },
                     }}
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 ))}
               </Box>
@@ -488,8 +504,8 @@ const Navbar = ({ window, toggle }) => {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      alt={user?.username?.substring(0, 1)}
+                      src="/asset/avatar.jpg"
                     />
                   </IconButton>
                 </Tooltip>

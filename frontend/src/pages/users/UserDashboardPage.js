@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 const UserDashboardPage = () => {
   return (
     <div>
-      <Navbar />
+     
       UserDashboardPage
     </div>
   );

@@ -72,34 +72,43 @@ const UserTicketPage = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="w-full p-3">
+    <div className="w-full max-w-[1280px] p-3 mx-auto">
       <div>
-        <div className="flex m-3 text-sm space-x-2">
+        <div className="my-6">
+          <h3 className="w-full text-xl mb-1 font-bold text-inherit">
+            Tickets Summary
+          </h3>
+          <div className="flex flex-wrap sm:flex-nowrap gap-2 text-sm">
+            {ticket_statuses.map((status) => (
+              <button
+                key={status.name}
+                style={{ color: status.color }}
+                className="w-full text-left text-sm bg-white py-4 px-3 rounded-md border font-inherit hover:bg-opacity-20"
+                onClick={() => setGlobalFilter(status.name)}
+              >
+                <p>{status.name}</p>
+                <p>{data.filter((e) => e.status === status.name).length}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center flex-wrap sm:flex-nowrap my-3 mt-12">
+          <h3 className="w-full text-xl mb-1 font-bold text-inherit">
+            Support Tickets
+          </h3>
           <button
-            className="text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
-            onClick={() => navigate("/admin/tickets/add")}
+            className="text-nowrap text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
+            onClick={() => navigate("/clients/open_ticket")}
           >
             <span className="flex items-center gap-1.5">
               <FiPlus />
-              New Ticket
+              Open Ticket
             </span>
           </button>
-          {ticket_statuses.map((status) => (
-            <button
-              key={status.name}
-              style={{
-                color: status.color,
-                borderColor: status.color,
-              }}
-              className="text-sm bg-transparent py-1 px-3 rounded-md border font-inherit hover:bg-opacity-20"
-              onClick={() => setGlobalFilter(status.name)}
-            >
-              {data.filter((e) => e.status === status.name).length}{" "}
-              {status.name}
-            </button>
-          ))}
         </div>
-        <div className="text-sm bg-white border flex flex-col justify-between  max-w-screen-2xl rounded-lg m-3  overflow-x-auto">
+
+        <div className="text-sm bg-white border flex flex-col justify-between  max-w-screen-2xl rounded-lg overflow-x-auto">
           <div className="flex justify-between items-center m-4">
             <div>
               <select

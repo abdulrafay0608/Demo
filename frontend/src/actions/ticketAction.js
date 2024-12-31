@@ -48,6 +48,21 @@ export const GetSingleTicketAction = createAsyncThunk(
     }
   }
 );
+export const GetUserTicketAction = createAsyncThunk(
+  "tickets/get-user/id",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${API_BASE_URL}/tickets/get-user/${id}`);
+      return data;
+    } catch (error) {
+      const message =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message || "An error occurred";
+      return rejectWithValue(message);
+    }
+  }
+);
 
 export const EditTicketAction = createAsyncThunk(
   "tickets/edit",

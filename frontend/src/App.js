@@ -21,6 +21,8 @@ import TicketSeverityPage from "./pages/admin/TicketSeverityPage";
 import TicketPriorityPage from "./pages/admin/TicketPriorityPage";
 import UserTicketPage from "./pages/users/UserTicketPage";
 import UserDashboardPage from "./pages/users/UserDashboardPage";
+import Navbar from "./components/Navbar/Navbar";
+import UserAddTicketPage from "./pages/users/UserAddTicketPage";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -85,10 +87,15 @@ function App() {
           </Routes>
         </SideBar>
       ) : isAuthenticated ? (
-        <Routes>
-          <Route path="/dashboard" element={<UserDashboardPage />} />
-          <Route path="/clients/open_ticket" element={<UserTicketPage />} />
-        </Routes>
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="/dashboard" element={<UserDashboardPage />} />
+            <Route path="/clients/tickets" element={<UserTicketPage />} />
+            <Route path="/clients/open_ticket" element={<UserAddTicketPage />} />
+            <Route path="*" element={<div>Not Found</div>} />
+          </Routes>
+        </>
       ) : (
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -5,12 +5,14 @@ import {
   EditTicketAction,
   GetSingleTicketAction,
   GetTicketAction,
+  GetUserTicketAction,
   UpdateStatusAction,
 } from "../../actions/ticketAction";
 
 const initialState = {
   allTickets: [],
   singleTicket: null,
+  userTickets: null,
   loading: false,
   error: null,
 };
@@ -38,7 +40,7 @@ const ticketSlice = createSlice({
         state.allTickets = [...state.allTickets, action.payload.ticket];
       })
       .addCase(AddTicketAction.rejected, handleError)
-      
+
       .addCase(GetTicketAction.pending, (state) => {
         state.loading = true;
       })
@@ -56,6 +58,15 @@ const ticketSlice = createSlice({
         state.singleTicket = action.payload.ticket;
       })
       .addCase(GetSingleTicketAction.rejected, handleError)
+
+      .addCase(GetUserTicketAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(GetUserTicketAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userTickets = action.payload.ticket;
+      })
+      .addCase(GetUserTicketAction.rejected, handleError)
 
       .addCase(UpdateStatusAction.pending, (state) => {
         state.loading = true;
