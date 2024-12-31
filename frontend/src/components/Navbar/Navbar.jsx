@@ -290,7 +290,7 @@ const Navbar = ({ window, toggle }) => {
 
   return (
     <>
-      {user.role === "admin" ? (
+      {user.role === "admin" || "manager" ? (
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
             position="static"

@@ -9,8 +9,8 @@ export const SignUpController = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
+    // Check if the email already exists
     const isExist = await AuthModel.findOne({ email });
-
     if (isExist) {
       return res.status(201).send({
         success: false,
@@ -18,21 +18,27 @@ export const SignUpController = async (req, res) => {
           "This email address is already registered. Please use a different email or try logging in.",
       });
     }
+
+    // Hash the password
     const hashpass = await hashPassword(password);
 
-    const user = await AuthModel.create({
+    // Create the user
+    await AuthModel.create({
       username,
       email,
       password: hashpass,
       role,
     });
 
-    generateToken(user, 200, "Sign-in Successful", res);
+    res.status(201).json({
+      success: true,
+      message: "User created successfully!",
+    });
   } catch (error) {
-    console.error(`Sign-in Error: ${error}`);
+    console.error(`Sign-up Error: ${error}`);
     res.status(500).json({
       success: false,
-      message: "Something went wrong. Please try again",
+      message: "Something went wrong. Please try again.",
     });
   }
 };
@@ -130,4 +136,3 @@ export const getAllUserController = async (req, res) => {
     });
   }
 };
-

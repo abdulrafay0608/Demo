@@ -12,6 +12,7 @@ import Loader from "../../components/loader/Loader";
 const roles = [
   { role: "admin", label: "Admin" },
   { role: "user", label: "User" },
+  { role: "manager", label: "Manager" },
 ];
 
 const RegisterPage = () => {
@@ -29,7 +30,7 @@ const RegisterPage = () => {
     dispatch(SignUpAction(data))
       .unwrap()
       .then(() => {
-        toast.success("Register successful!");
+        toast.success("User create successful!");
       })
       .catch((err) => {
         toast.error(err || "Register failed. Please try again.");

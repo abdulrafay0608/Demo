@@ -9,19 +9,19 @@ export const routes = [
     path: "/dashboard",
     name: "Dashboard",
     icon: <FaHome />, // Home icon for Dashboard
-    roles: ["admin", "manager", "user"],
+    roles: ["admin", "manager"],
   },
   {
     path: "/admin/tickets",
     name: "Support",
     icon: <FaTicketAlt />, // Ticket icon for Tickets
-    roles: ["admin", "manager", "user"],
+    roles: ["admin", "manager"],
   },
   {
     path: "/admin/customers",
     name: "Customers",
     icon: <AiOutlineUsergroupAdd />, // Group icon for Registration (admin only)
-    roles: ["admin", "manager", "user"],
+    roles: ["admin", "manager"],
   },
   {
     path: "/reports",

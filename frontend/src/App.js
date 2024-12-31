@@ -78,7 +78,7 @@ function App() {
         transition={Bounce}
       />
       {isAuthenticated ? (
-        user.role === "admin" ? (
+        user?.role === "admin" || "manager" ? (
           <SideBar>
             <Routes>
               {adminRoutes.map(({ path, element }) => (

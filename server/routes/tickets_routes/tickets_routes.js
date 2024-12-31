@@ -18,19 +18,19 @@ router.get("/get-user/:id", getUserTicketController);
 router.post(
   "/add",
   isAuthenticated,
-  checkRole("admin", "user"),
+  checkRole("admin", "user", "manager"),
   addTicketController
 );
 router.put(
   "/edit/:id",
   isAuthenticated,
-  checkRole("admin", "user"),
+  checkRole("admin", "user", "manager"),
   EditTicketController
 );
 router.put(
   "/update-status/:id",
   isAuthenticated,
-  checkRole("admin", "user"),
+  checkRole("admin", "manager"),
   UpdateStatusController
 );
 router.delete(

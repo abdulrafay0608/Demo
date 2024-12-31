@@ -41,17 +41,24 @@ export const COL_TICKETS = [
             >
               View
             </Link>
+            {user.role === "admin" ||
+              ("manager" && (
+                <>
+                  |
+                  <Link
+                    to={
+                      row.original._id
+                        ? `/tickets/edit/${row.original._id}`
+                        : "#"
+                    }
+                    className="text-[12px] px-1"
+                  >
+                    Edit
+                  </Link>
+                </>
+              ))}
             {user.role === "admin" && (
               <>
-                |
-                <Link
-                  to={
-                    row.original._id ? `/tickets/edit/${row.original._id}` : "#"
-                  }
-                  className="text-[12px] px-1"
-                >
-                  Edit
-                </Link>
                 |
                 <button
                   className="text-[12px] px-1"
