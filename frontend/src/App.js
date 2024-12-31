@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SideBar from "./components/Sidebar/SideBar";
 import Ticket from "./pages/Tickets/Ticket";
 import { useEffect, useState } from "react";
@@ -42,6 +42,26 @@ function App() {
     return <Loader />;
   }
 
+  const adminRoutes = [
+    { path: "/admin/dashboard", element: <Dashboard /> },
+    { path: "/admin/tickets", element: <Ticket /> },
+    { path: "/admin/tickets/add", element: <TicketAdd /> },
+    { path: "/admin/tickets/edit/:id", element: <TicketEdit /> },
+    { path: "/admin/tickets/view/:id", element: <TicketView /> },
+    { path: "/admin/tickets/departments", element: <DepartmentsPage /> },
+    { path: "/admin/tickets/services", element: <ServicesPage /> },
+    { path: "/admin/tickets/severity", element: <TicketSeverityPage /> },
+    { path: "/admin/tickets/priorities", element: <TicketPriorityPage /> },
+    { path: "/admin/tickets/statuses", element: <TicketStatusesPage /> },
+    { path: "/admin/staff", element: <RegisterPage /> },
+  ];
+
+  const userRoutes = [
+    { path: "/dashboard", element: <UserDashboardPage /> },
+    { path: "/clients/tickets", element: <UserTicketPage /> },
+    { path: "/clients/open_ticket", element: <UserAddTicketPage /> },
+  ];
+
   return (
     <>
       <ToastContainer
@@ -57,48 +77,31 @@ function App() {
         theme="light"
         transition={Bounce}
       />
-      {isAuthenticated && user?.role === "admin" ? (
-        <SideBar>
-          <Routes>
-            <Route path="admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/tickets" element={<Ticket />} />
-            <Route path="/admin/tickets/add" element={<TicketAdd />} />
-            <Route path="/admin/tickets/edit/:id" element={<TicketEdit />} />
-            <Route path="/admin/tickets/view/:id" element={<TicketView />} />
-            <Route
-              path="/admin/tickets/departments"
-              element={<DepartmentsPage />}
-            />
-            <Route path="/admin/tickets/services" element={<ServicesPage />} />
-            <Route
-              path="/admin/tickets/severity"
-              element={<TicketSeverityPage />}
-            />
-            <Route
-              path="/admin/tickets/priorities"
-              element={<TicketPriorityPage />}
-            />
-            <Route
-              path="/admin/tickets/statuses"
-              element={<TicketStatusesPage />}
-            />
-            <Route path="/admin/staff" element={<RegisterPage />} />
-            <Route path="*" element={<div>Not Found</div>} />
-          </Routes>
-        </SideBar>
-      ) : isAuthenticated ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/dashboard" element={<UserDashboardPage />} />
-            <Route path="/clients/tickets" element={<UserTicketPage />} />
-            <Route path="/clients/open_ticket" element={<UserAddTicketPage />} />
-            <Route path="*" element={<div>Not Found</div>} />
-          </Routes>
-        </>
+      {isAuthenticated ? (
+        user.role === "admin" ? (
+          <SideBar>
+            <Routes>
+              {adminRoutes.map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+              <Route path="*" element={<div>Admin Page Not Found</div>} />
+            </Routes>
+          </SideBar>
+        ) : (
+          <>
+            <Navbar />
+            <Routes>
+              {userRoutes.map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+              <Route path="*" element={<div>User Page Not Found</div>} />
+            </Routes>
+          </>
+        )
       ) : (
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}
     </>

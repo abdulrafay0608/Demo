@@ -21,11 +21,11 @@ import { GetTicketStatusesAction } from "../../actions/ticketStatusesAction";
 
 const UserTicketPage = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
-  const { allTickets, loading } = useSelector((state) => state.ticket);
+  const { userTickets, loading } = useSelector((state) => state.ticket);
   const { ticket_statuses } = useSelector((state) => state?.ticket_statuses);
   const data = useMemo(
-    () => (Array.isArray(allTickets) ? allTickets : []),
-    [allTickets]
+    () => (Array.isArray(userTickets) ? userTickets : []),
+    [userTickets]
   );
   const navigate = useNavigate();
   const columns = useMemo(() => COL_TICKETS, [COL_TICKETS]);

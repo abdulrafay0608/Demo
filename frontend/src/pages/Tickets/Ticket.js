@@ -195,10 +195,10 @@ const Ticket = () => {
                             ? ticket_statuses
                                 .filter(
                                   (status) =>
-                                    row.original.status.toLowerCase() ===
-                                    status.name.toLowerCase()
+                                    row?.original.status?.toLowerCase() ===
+                                    status?.name?.toLowerCase()
                                 )
-                                .map((status) => (
+                                ?.map((status) => (
                                   <span
                                     key={status.name}
                                     style={{ color: status.color }}
