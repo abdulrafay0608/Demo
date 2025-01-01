@@ -23,6 +23,9 @@ import UserTicketPage from "./pages/users/UserTicketPage";
 import UserDashboardPage from "./pages/users/UserDashboardPage";
 import Navbar from "./components/Navbar/Navbar";
 import UserAddTicketPage from "./pages/users/UserAddTicketPage";
+import ProjectsPage from "./pages/admin/projects/ProjectsPage";
+import AddProjectsPage from "./pages/admin/projects/AddProjectsPage";
+import UserProjectsPage from "./pages/users/UserProjectsPage";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -45,6 +48,8 @@ function App() {
   const adminRoutes = [
     { path: "/admin/dashboard", element: <Dashboard /> },
     { path: "/admin/tickets", element: <Ticket /> },
+    { path: "/admin/projects", element: <ProjectsPage /> },
+    { path: "/admin/projects/add", element: <AddProjectsPage /> },
     { path: "/admin/tickets/add", element: <TicketAdd /> },
     { path: "/admin/tickets/edit/:id", element: <TicketEdit /> },
     { path: "/admin/tickets/view/:id", element: <TicketView /> },
@@ -58,6 +63,7 @@ function App() {
 
   const userRoutes = [
     { path: "/dashboard", element: <UserDashboardPage /> },
+    { path: "/clients/projects", element: <UserProjectsPage /> },
     { path: "/clients/tickets", element: <UserTicketPage /> },
     { path: "/clients/open_ticket", element: <UserAddTicketPage /> },
   ];
@@ -78,7 +84,7 @@ function App() {
         transition={Bounce}
       />
       {isAuthenticated ? (
-        user?.role === "admin" || "manager" ? (
+        user?.role === "admin" || user?.role === "manager" ? (
           <SideBar>
             <Routes>
               {adminRoutes.map(({ path, element }) => (

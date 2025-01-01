@@ -266,7 +266,11 @@ const Navbar = ({ window, toggle }) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography
+        onClick={() => navigate("/dashboard")}
+        variant="h6"
+        sx={{ my: 2 }}
+      >
         Abdul Rafay Tech
       </Typography>
       <Divider />
@@ -290,7 +294,7 @@ const Navbar = ({ window, toggle }) => {
 
   return (
     <>
-      {user.role === "admin" || "manager" ? (
+      {user.role === "admin" || user?.role === "manager" ? (
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
             position="static"
@@ -467,9 +471,15 @@ const Navbar = ({ window, toggle }) => {
                 <MenuIcon />
               </IconButton>
               <Typography
+                onClick={() => navigate("/dashboard")}
                 variant="h6"
                 component="div"
-                sx={{ flexGrow: 1, fontWeight: 800, fontFamily: "inherit" }}
+                sx={{
+                  flexGrow: 1,
+                  fontWeight: 800,
+                  fontFamily: "inherit",
+                  cursor: "pointer",
+                }}
               >
                 Abdul Rafay Tech
               </Typography>

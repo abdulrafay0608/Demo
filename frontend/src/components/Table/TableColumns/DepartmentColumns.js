@@ -8,7 +8,7 @@ import {
   GetDepartmentsAction,
 } from "../../../actions/departmentAction";
 import { toast } from "react-toastify";
-import ColumnFilter from "./ColumnsFilter";
+import ColumnFilter from "../ColumnsFilter";
 import DepartmentDialog from "../../Dialogs/DepartmentsDialog";
 
 export const COL_DEPARTMENTS = ({ setInitialData, setIsEdit }) => [

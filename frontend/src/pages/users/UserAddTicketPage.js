@@ -6,9 +6,6 @@ import ReusableSelect from "../../components/Utils/ReusableSelect";
 import { FaBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AddTicketAction } from "../../actions/ticketAction";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
 import { GetTicketPriorityAction } from "../../actions/ticketPriorityAction";
 import { GetDepartmentsAction } from "../../actions/departmentAction";
@@ -24,7 +21,9 @@ const UserAddTicketPage = () => {
   const { ticket_priority } = useSelector((state) => state?.ticket_priority);
   const { department } = useSelector((state) => state?.department);
   const { loading } = useSelector((state) => state.ticket);
+  const { userProjects } = useSelector((state) => state.projects);
   const { ticket_statuses } = useSelector((state) => state?.ticket_statuses);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -50,13 +49,13 @@ const UserAddTicketPage = () => {
     const defaultStatus = ticket_statuses.find((sta) => sta.name === "Open");
 
     if (defaultSeverity) {
-      setValue("severity", defaultSeverity._id); // Set default severity ID
+      setValue("severity", defaultSeverity._id);
     }
     if (defaultPriority) {
-      setValue("priority", defaultPriority._id); // Set default priority ID
+      setValue("priority", defaultPriority._id);
     }
     if (defaultStatus) {
-      setValue("status", defaultStatus._id); // Set default priority ID
+      setValue("status", defaultStatus._id);
     }
   }, [ticket_severity, ticket_priority, ticket_statuses, setValue]);
 
@@ -108,10 +107,10 @@ const UserAddTicketPage = () => {
                   required: "Subject is required",
                 })}
                 error={errors.subject?.message}
-                placeholder="Enter your subject"
+                placeholder=""
                 className="text-sm md:px-4 px-2 py-2"
               />
-              <Input
+              {/* <Input
                 label="Project"
                 type="text"
                 {...register("project", {
@@ -120,6 +119,25 @@ const UserAddTicketPage = () => {
                 error={errors.project?.message}
                 placeholder="Enter your project"
                 className="text-sm md:px-4 px-2 py-2"
+              /> */}
+              <Controller
+                name="project"
+                control={control}
+                rules={{ required: "Project is required" }}
+                render={({ field }) => (
+                  <ReusableSelect
+                    label="Project"
+                    name={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={userProjects.map((project) => ({
+                      value: project?._id,
+                      label: project?.project_name,
+                    }))}
+                    error={errors.project?.message}
+                    placeholder=""
+                  />
+                )}
               />
 
               <Controller
@@ -137,7 +155,7 @@ const UserAddTicketPage = () => {
                       label: depart?.name,
                     }))}
                     error={errors.department?.message}
-                    placeholder="Select your department"
+                    placeholder=""
                   />
                 )}
               />
@@ -187,10 +205,10 @@ const UserAddTicketPage = () => {
               </div>
 
               <TextArea
-                label="Ticket Body"
-                {...register("ticket_body")}
-                error={errors.ticket_body?.message}
-                placeholder="Enter your ticket body"
+                label="Description"
+                {...register("ticket_description")}
+                error={errors.ticket_description?.message}
+                placeholder=""
                 rows={6}
                 className="text-sm md:px-4 px-2 py-2"
               />

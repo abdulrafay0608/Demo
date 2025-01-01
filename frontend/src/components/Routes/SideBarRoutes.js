@@ -1,20 +1,24 @@
-import {
-  AiFillFileText,
-  AiOutlineUsergroupAdd,
-} from "react-icons/ai";
+import { AiFillFileText, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaHome, FaTicketAlt } from "react-icons/fa";
+import { FaChartBar } from "react-icons/fa6";
 
 export const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: <FaHome />, // Home icon for Dashboard
+    icon: <FaHome />,
+    roles: ["admin", "manager"],
+  },
+  {
+    path: "/admin/projects",
+    name: "Projects",
+    icon: <FaChartBar />,
     roles: ["admin", "manager"],
   },
   {
     path: "/admin/tickets",
     name: "Support",
-    icon: <FaTicketAlt />, // Ticket icon for Tickets
+    icon: <FaTicketAlt />,
     roles: ["admin", "manager"],
   },
   {

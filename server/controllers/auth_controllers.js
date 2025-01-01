@@ -121,7 +121,7 @@ export const LogOutController = async (req, res) => {
 
 export const getAllUserController = async (req, res) => {
   try {
-    const user = await AuthModel.find();
+    const user = await AuthModel.find({ role: "user" });
 
     res.status(200).json({
       success: true,

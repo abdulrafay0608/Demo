@@ -8,17 +8,14 @@ const ticketSchema = new mongoose.Schema(
     priority: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ticket_Priority",
-      default: "Medium",
     },
     severity: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ticket_Severity",
-      default: "Medium",
     },
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ticket_Status",
-      default: "Open",
     },
     department: {
       type: mongoose.Schema.Types.ObjectId,

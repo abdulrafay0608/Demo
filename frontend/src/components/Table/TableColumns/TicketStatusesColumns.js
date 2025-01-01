@@ -4,7 +4,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import ColumnFilter from "./ColumnsFilter";
+import ColumnFilter from "../ColumnsFilter";
 import TicketStatusesDialog from "../../Dialogs/TicketStatusesDialog";
 import {
   DeleteTicketStatusesAction,
