@@ -5,6 +5,7 @@ import DBConnect from "./utils/dbconnection.js";
 import cookieParser from "cookie-parser";
 import ticketsRoutes from "./routes/tickets_routes/tickets_routes.js";
 import projectsRoutes from "./routes/projects_routes.js";
+import customerRoutes from "./routes/customers_routes.js";
 import authRoutes from "./routes/auth_routes.js";
 import departmentRoutes from "./routes/departments_route.js";
 import serviceRoutes from "./routes/services_route.js";
@@ -49,6 +50,7 @@ app.use("/api/ticket_statuses", ticketStatusesRoutes);
 app.use("/api/ticket_priority", ticketPriorityRoutes);
 app.use("/api/ticket_severity", ticketSeverityRoutes);
 app.use("/api/projects", projectsRoutes);
+app.use("/api/customers", customerRoutes);
 
 // Root Route
 app.get("/", (req, res) => {

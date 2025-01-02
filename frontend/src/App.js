@@ -26,6 +26,8 @@ import UserAddTicketPage from "./pages/users/UserAddTicketPage";
 import ProjectsPage from "./pages/admin/projects/ProjectsPage";
 import AddProjectsPage from "./pages/admin/projects/AddProjectsPage";
 import UserProjectsPage from "./pages/users/UserProjectsPage";
+import CustomerPage from "./pages/admin/customer.js/CustomerPage";
+import AddCustomerPage from "./pages/admin/customer.js/AddCustomerPage";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -48,10 +50,12 @@ function App() {
   const adminRoutes = [
     { path: "/admin/dashboard", element: <Dashboard /> },
     { path: "/admin/tickets", element: <Ticket /> },
+    { path: "/admin/tickets/add", element: <TicketAdd /> },
     { path: "/admin/projects", element: <ProjectsPage /> },
     { path: "/admin/projects/add", element: <AddProjectsPage /> },
-    { path: "/admin/tickets/add", element: <TicketAdd /> },
     { path: "/admin/tickets/edit/:id", element: <TicketEdit /> },
+    { path: "/admin/customers", element: <CustomerPage /> },
+    { path: "/admin/customers/add", element: <AddCustomerPage /> },
     { path: "/admin/tickets/view/:id", element: <TicketView /> },
     { path: "/admin/tickets/departments", element: <DepartmentsPage /> },
     { path: "/admin/tickets/services", element: <ServicesPage /> },

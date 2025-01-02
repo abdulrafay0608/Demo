@@ -130,7 +130,7 @@ const UserAddTicketPage = () => {
                     name={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    options={userProjects.map((project) => ({
+                    options={userProjects?.map((project) => ({
                       value: project?._id,
                       label: project?.project_name,
                     }))}

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const Projectchema = new mongoose.Schema(
+const ProjectSchema = new mongoose.Schema(
   {
     id: {
       type: Number,
@@ -41,7 +41,7 @@ const Projectchema = new mongoose.Schema(
   }
 );
 
-Projectchema.pre("save", async function (next) {
+ProjectSchema.pre("save", async function (next) {
   if (!this.id) {
     const lastRecord = await this.constructor.findOne().sort({ id: -1 });
     if (lastRecord) {
@@ -53,6 +53,6 @@ Projectchema.pre("save", async function (next) {
   next();
 });
 
-const ProjectModel = mongoose.model("Projects", Projectchema);
+const ProjectModel = mongoose.model("Projects", ProjectSchema);
 
 export default ProjectModel;

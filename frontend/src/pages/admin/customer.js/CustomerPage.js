@@ -14,28 +14,29 @@ import {
 } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/loader/Loader";
-import { GetTicketStatusesAction } from "../../actions/ticketStatusesAction";
-import { COL_PROJECTS } from "../../components/Table/TableColumns/ProjectColumns";
-import { GetUserProjectsAction } from "../../actions/projectsAction";
-const UserProjectsPage = () => {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  const { userProjects, loading } = useSelector((state) => state.projects);
-  const { ticket_statuses } = useSelector((state) => state?.ticket_statuses);
+import { GetTicketStatusesAction } from "../../../actions/ticketStatusesAction";
+import Loader from "../../../components/loader/Loader";
+import { COL_CUSTOMERS } from "../../../components/Table/TableColumns/CustomerColumns";
+import { GetAllCustomersAction } from "../../../actions/customersAction";
+
+const CustomerPage = () => {
+  const { isAuthenticated, user } = useSelector((state) => state?.user);
+  const { customers, loading } = useSelector((state) => state?.customers);
   const data = useMemo(
-    () => (Array.isArray(userProjects) ? userProjects : []),
-    [userProjects]
+    () => (Array.isArray(customers) ? customers : []),
+    [customers]
   );
   const navigate = useNavigate();
-  const columns = useMemo(() => COL_PROJECTS, [COL_PROJECTS]);
+  const columns = useMemo(() => COL_CUSTOMERS, [COL_CUSTOMERS]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(GetUserProjectsAction(user._id));
+      dispatch(GetAllCustomersAction());
       dispatch(GetTicketStatusesAction());
     }
   }, []);
+
   // React Table Hooks
   const {
     getTableProps,
@@ -71,45 +72,52 @@ const UserProjectsPage = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="w-full max-w-[1280px] p-3 mx-auto">
+    <div className="w-full p-3">
       <div>
-        <div className="my-6">
-          <h3 className="w-full text-xl mb-1 font-bold text-inherit">
-            Projects Summary
-          </h3>
-          <div className="flex flex-wrap sm:flex-nowrap gap-2 text-sm">
-            {ticket_statuses?.map((status) => (
-              <button
-                key={status?.name}
-                style={{ color: status?.color }}
-                className="w-full text-left text-sm bg-white py-4 px-3 rounded-md border font-inherit hover:bg-opacity-20"
-                onClick={() => setGlobalFilter(status?.name)}
-              >
-                <p>{status?.name}</p>
-                <p>
-                  {data?.filter((e) => e.status.name === status.name).length}
-                </p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center flex-wrap sm:flex-nowrap my-3 mt-12">
-          <h3 className="w-full text-xl mb-1 font-bold">
-            Projects
-          </h3>
+        <div className="flex m-3 text-sm space-x-2">
           <button
-            className="text-nowrap text-sm bg-black text-white py-2 px-3 rounded-md font-semibold hover:bg-opacity-90"
-            onClick={() => navigate("/clients/open_ticket")}
+            className="text-sm bg-black text-white py-2 px-3 rounded-md font-inherit hover:bg-opacity-90"
+            onClick={() => navigate("/admin/customers/add")}
           >
             <span className="flex items-center gap-1.5">
               <FiPlus />
-              Open Ticket
+              New Customer
             </span>
           </button>
+          <button
+            className="text-sm bg-transparent py-1 px-3 rounded-md border font-inherit hover:bg-opacity-20"
+            // onClick={() => setGlobalFilter(status.name)}
+          >
+            {data.length} Total Customer
+          </button>
+          <button
+            className="text-sm bg-transparent py-1 px-3 rounded-md border font-inherit hover:bg-opacity-20"
+            // onClick={() => setGlobalFilter(status.name)}
+          >
+            {data.filter((e) => e.status === true).length} Active Customer
+          </button>
+          <button
+            className="text-sm bg-transparent py-1 px-3 rounded-md border font-inherit hover:bg-opacity-20"
+            // onClick={() => setGlobalFilter(status.name)}
+          >
+            {data.filter((e) => e.status === false).length} InActive Customer
+          </button>
+          {/* {ticket_statuses.map((status) => (
+            <button
+              key={status.name}
+              style={{
+                color: status.color,
+                borderColor: status.color,
+              }}
+              className="text-sm bg-transparent py-1 px-3 rounded-md border font-inherit hover:bg-opacity-20"
+              onClick={() => setGlobalFilter(status.name)}
+            >
+              {data.filter((e) => e.status.name === status.name).length}{" "}
+              {status.name}
+            </button>
+          ))} */}
         </div>
-
-        <div className="text-sm bg-white border flex flex-col justify-between  max-w-screen-2xl rounded-lg overflow-x-auto">
+        <div className="text-sm bg-white border flex flex-col justify-between  max-w-screen-2xl rounded-lg m-3  overflow-x-auto">
           <div className="flex justify-between items-center m-4">
             <div>
               <select
@@ -146,6 +154,7 @@ const UserProjectsPage = () => {
           </div>
           <table
             className="min-w-full border-collapse border border-gray-200"
+            style={{ tableLayout: "auto" }}
             key={tableKey}
             {...tableProps}
           >
@@ -156,8 +165,6 @@ const UserProjectsPage = () => {
                 return (
                   <tr key={headerGroupKey} {...headerGroupProps}>
                     {headerGroup.headers.map((column) => {
-                      if (user.role === "user" && column.Header === "Options")
-                        return null;
                       const sortProps = column.getSortByToggleProps();
                       const { key: sortKey, ...restSortProps } = sortProps;
                       return (
@@ -165,9 +172,10 @@ const UserProjectsPage = () => {
                           key={column.id}
                           {...restSortProps}
                           className="px-2 py-2 font-semibold text-nowrap text-left cursor-pointer border"
+                          style={{ whiteSpace: "nowrap" }}
                         >
                           <div className="flex justify-between items-center space-x-1">
-                            <span>{column.render("Header")}</span>
+                            <span>{column.render("Header")}</span>{" "}
                             <span>
                               {column.isSorted ? (
                                 column.isSortedDesc ? (
@@ -180,6 +188,14 @@ const UserProjectsPage = () => {
                               )}
                             </span>
                           </div>
+                          {column.canFilter ? (
+                            <div
+                              className="font-normal"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {column.render("Filter")}
+                            </div>
+                          ) : null}
                         </th>
                       );
                     })}
@@ -194,8 +210,6 @@ const UserProjectsPage = () => {
                 return (
                   <tr key={key} {...rowProps}>
                     {row.cells.map((cell) => {
-                      if (user.role === "user" && cell.column.id === "options")
-                        return null;
                       const { key: cellKey, ...cellProps } =
                         cell.getCellProps();
                       return (
@@ -204,23 +218,7 @@ const UserProjectsPage = () => {
                           className="px-2 py-3 text-sm text-gray-700"
                           {...cellProps}
                         >
-                          {cell.column.id === "status.name"
-                            ? ticket_statuses
-                                .filter(
-                                  (status) =>
-                                    row.original.status.name?.toLowerCase() ===
-                                    status?.name?.toLowerCase()
-                                )
-                                ?.map((status) => (
-                                  <span
-                                    key={status.name}
-                                    style={{ color: status.color }}
-                                    className="px-1.5 py-0.5 text-nowrap rounded-lg border"
-                                  >
-                                    {status.name}
-                                  </span>
-                                ))
-                            : cell.render("Cell")}
+                          {cell.render("Cell")}
                         </td>
                       );
                     })}
@@ -303,4 +301,4 @@ const UserProjectsPage = () => {
   );
 };
 
-export default UserProjectsPage;
+export default CustomerPage;

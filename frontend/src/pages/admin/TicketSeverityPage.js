@@ -29,9 +29,14 @@ const TicketSeverityPage = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state?.user);
-  const { ticket_severity, loading } = useSelector((state) => state?.ticket_severity);
-  
-  const columns = useMemo(() => COL_TICKET_SEVERITY({ setInitialData, setIsEdit }),[COL_TICKET_SEVERITY]);
+  const { ticket_severity, loading } = useSelector(
+    (state) => state?.ticket_severity
+  );
+
+  const columns = useMemo(
+    () => COL_TICKET_SEVERITY({ setInitialData, setIsEdit }),
+    [COL_TICKET_SEVERITY]
+  );
   const data = useMemo(
     () => (Array.isArray(ticket_severity) ? ticket_severity : []),
     [ticket_severity]

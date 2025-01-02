@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../components/Utils/Input";
 import Button from "../../components/Utils/Button";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
+import { GetDepartmentsAction } from "../../actions/departmentAction";
 
 const roles = [
   { role: "admin", label: "Admin" },
@@ -17,6 +18,8 @@ const roles = [
 
 const RegisterPage = () => {
   const { loading } = useSelector((state) => state.user);
+  const { department } = useSelector((state) => state?.department);
+
   const {
     register,
     handleSubmit,
@@ -30,61 +33,106 @@ const RegisterPage = () => {
     dispatch(SignUpAction(data))
       .unwrap()
       .then(() => {
-        toast.success("User create successful!");
+        toast.success("Staff create successful!");
       })
       .catch((err) => {
         toast.error(err || "Register failed. Please try again.");
       });
   };
 
+  useEffect(() => {
+    dispatch(GetDepartmentsAction());
+  }, []);
   if (loading) {
     return <Loader />;
   }
 
   return (
     <div className="my-8 w-full max-w-5xl md:mx-auto mx-2">
-      <h2 className="font-semibold text-xl m-2">Register Form</h2>
+      <h2 className="font-semibold text-xl m-2">Staff Form</h2>
       <div className="text-sm bg-white border flex flex-col justify-between rounded-lg shadow-lg ">
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <div className="flex gap-x-6 p-6">
-            <div className="space-y-4 w-1/2">
+            <div className="space-y-4 w-full">
               <Input
-                label="Username"
+                label="First Name"
                 type="text"
-                {...register("username", {
-                  required: "UserName is required",
+                {...register("first_name", {
+                  required: "First Name is required",
                 })}
-                error={errors?.username?.message}
-                placeholder="Enter your subject"
+                error={errors?.first_name?.message}
+                placeholder=""
                 className="md:px-4 px-2 py-2"
               />
               <Input
-                label="Email"
+                label="Last Name"
+                type="text"
+                {...register("last_name", {
+                  required: "Last Name is required",
+                })}
+                error={errors?.last_name?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />
+              <Input
+                label="Email Address"
                 type="email"
                 {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
+                  required: "Email Address is required",
                 })}
-                error={errors.email?.message}
-                placeholder="Enter your email"
+                error={errors?.email?.message}
+                placeholder=""
                 className="md:px-4 px-2 py-2"
               />
               <Input
                 label="Password"
-                type="password"
+                type="text"
                 {...register("password", {
                   required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
                 })}
-                error={errors.password?.message}
-                placeholder="Enter your password"
+                error={errors?.password?.message}
+                placeholder=""
                 className="md:px-4 px-2 py-2"
+              />
+              <Input
+                label="Phone #"
+                type="text"
+                {...register("phone", {
+                  required: "Phone number is required",
+                })}
+                error={errors?.phone?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />
+              <Input
+                label="Mobile #"
+                type="text"
+                {...register("mobile", {
+                  required: "Mobile number is required",
+                })}
+                error={errors?.mobile?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />
+
+              <Controller
+                name="department"
+                control={control}
+                rules={{ required: "Department is required" }}
+                render={({ field }) => (
+                  <ReusableSelect
+                    label="Department"
+                    name={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={department.map((department) => ({
+                      value: department?._id,
+                      label: department?.name,
+                    }))}
+                    error={errors?.department?.message}
+                    placeholder=""
+                  />
+                )}
               />
               <Controller
                 name="role"
@@ -111,8 +159,8 @@ const RegisterPage = () => {
           <div className="p-6 pt-0">
             <Button
               type="submit"
-              label="Register"
-              className="text-nowrap px-3 py-2 max-w-min "
+              label="Save Staff"
+              className="text-nowrap px-3 py-2 max-w-min"
               // loading={loading}
             />
           </div>

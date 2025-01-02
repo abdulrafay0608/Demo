@@ -16,14 +16,13 @@ export const isAuthenticated = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await AuthModel.findOne({ email: decoded.email }).select(
       "username email role"
-    ); // Fetch only necessary fields
+    );
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "Session expired. User not found. Please log in again.",
       });
     }
-
     req.user = user;
     next();
   } catch (err) {
@@ -38,6 +37,7 @@ export const isAuthenticated = async (req, res, next) => {
 export const checkRole = (...allowedRoles) => {
   return (req, res, next) => {
     try {
+      console.log("...allowedRoles", ...allowedRoles);
       const userRole = req.user?.role;
       if (!userRole) {
         return res.status(401).send({
@@ -52,7 +52,7 @@ export const checkRole = (...allowedRoles) => {
           message: `Access Denied! Role "${userRole}" is not allowed to access this resource.`,
         });
       }
-
+      console.log("token", req.user);
       next(); // Proceed to the controller if role is allowed
     } catch (error) {
       console.error(`Error in Role Authorization: ${error.message}`);

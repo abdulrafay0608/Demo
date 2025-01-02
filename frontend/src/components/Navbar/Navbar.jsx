@@ -348,7 +348,6 @@ const Navbar = ({ window, toggle }) => {
                   "&:hover": {
                     color: "#444952",
                   },
-                  fontFamily: "inherit",
                   display: { xs: "none", sm: "block" },
                 }}
               >
@@ -477,7 +476,6 @@ const Navbar = ({ window, toggle }) => {
                 sx={{
                   flexGrow: 1,
                   fontWeight: 800,
-                  fontFamily: "inherit",
                   cursor: "pointer",
                 }}
               >
@@ -495,7 +493,6 @@ const Navbar = ({ window, toggle }) => {
                     to={item.path}
                     key={item.name}
                     sx={{
-                      fontFamily: "inherit",
                       color: "#444952",
                       padding: "8px 16px", // Add padding for better UX
                       transition: "all 0.3s ease", // Smooth hover effect
