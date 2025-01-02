@@ -52,8 +52,8 @@ const RegisterPage = () => {
       <h2 className="font-semibold text-xl m-2">Staff Form</h2>
       <div className="text-sm bg-white border flex flex-col justify-between rounded-lg shadow-lg ">
         <form onSubmit={handleSubmit(onSubmit)} className="">
-          <div className="flex gap-x-6 p-6">
-            <div className="space-y-4 w-full">
+          <div className="flex md:flex-row flex-col  gap-x-6 p-6 w-full">
+            <div className="space-y-4 md:w-1/2 w-full">
               <Input
                 label="First Name"
                 type="text"
@@ -64,16 +64,7 @@ const RegisterPage = () => {
                 placeholder=""
                 className="md:px-4 px-2 py-2"
               />
-              <Input
-                label="Last Name"
-                type="text"
-                {...register("last_name", {
-                  required: "Last Name is required",
-                })}
-                error={errors?.last_name?.message}
-                placeholder=""
-                className="md:px-4 px-2 py-2"
-              />
+
               <Input
                 label="Email Address"
                 type="email"
@@ -84,16 +75,7 @@ const RegisterPage = () => {
                 placeholder=""
                 className="md:px-4 px-2 py-2"
               />
-              <Input
-                label="Password"
-                type="text"
-                {...register("password", {
-                  required: "Password is required",
-                })}
-                error={errors?.password?.message}
-                placeholder=""
-                className="md:px-4 px-2 py-2"
-              />
+
               <Input
                 label="Phone #"
                 type="text"
@@ -101,16 +83,6 @@ const RegisterPage = () => {
                   required: "Phone number is required",
                 })}
                 error={errors?.phone?.message}
-                placeholder=""
-                className="md:px-4 px-2 py-2"
-              />
-              <Input
-                label="Mobile #"
-                type="text"
-                {...register("mobile", {
-                  required: "Mobile number is required",
-                })}
-                error={errors?.mobile?.message}
                 placeholder=""
                 className="md:px-4 px-2 py-2"
               />
@@ -134,6 +106,38 @@ const RegisterPage = () => {
                   />
                 )}
               />
+            </div>
+            <div className="space-y-4 md:w-1/2 w-full">
+              <Input
+                label="Last Name"
+                type="text"
+                {...register("last_name", {
+                  required: "Last Name is required",
+                })}
+                error={errors?.last_name?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />
+              <Input
+                label="Password"
+                type="text"
+                {...register("password", {
+                  required: "Password is required",
+                })}
+                error={errors?.password?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />{" "}
+              <Input
+                label="Mobile #"
+                type="text"
+                {...register("mobile", {
+                  required: "Mobile number is required",
+                })}
+                error={errors?.mobile?.message}
+                placeholder=""
+                className="md:px-4 px-2 py-2"
+              />{" "}
               <Controller
                 name="role"
                 control={control}
